@@ -3,6 +3,35 @@
   
     
     <entry>
+      <title><![CDATA[UE 如何关闭自带的安卓屏幕按钮轮盘]]></title>
+      <url>/posts/2171047824/</url>
+      <content type="html"><![CDATA[<p><strong>UE 如何关闭自带的安卓屏幕按钮轮盘：</strong></p>
+<p>一张图搞定</p>
+<p><img src="https://www.zhreleven.com:18090/images/2023/07/31/UE-.png" alt="image-20230731193049781"></p>
+<p><em>截图版本UE5.2</em></p>
+<p>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a></p>
+<div style="text-align: center;padding: 0; margin: 0;"><br><br>    <img class="wechat-qrcode"  src="https://brucekong-com.gitee.io/images/wechat-blog.png" alt="关注公众号"><br></div>
+
+]]></content>
+      
+        <categories>
+            
+            <category> languages </category>
+            
+        </categories>
+        
+        
+        <tags>
+            
+            <tag> UE4 </tag>
+            
+            <tag> UE5 </tag>
+            
+        </tags>
+        
+    </entry>
+    
+    <entry>
       <title><![CDATA[Oracle客户端安装配置]]></title>
       <url>/posts/1689051047/</url>
       <content type="html"><![CDATA[<p><strong>Oracle Client安装配置：</strong><br>直接安装ODT with ODAC失败，换之安装Oracle Client，再配置环境变量。</p>
@@ -1436,13 +1465,13 @@
         
         <tags>
             
-            <tag> Nginx </tag>
-            
-            <tag> 代理 </tag>
-            
             <tag> GIS </tag>
             
+            <tag> Nginx </tag>
+            
             <tag> OpenSSL </tag>
+            
+            <tag> 代理 </tag>
             
         </tags>
         
@@ -2545,6 +2574,12 @@
   
     
     <entry>
+      <title><![CDATA[读书]]></title>
+      <url>/reading/index.html</url>
+      <content type="html"></content>
+    </entry>
+    
+    <entry>
       <title><![CDATA[关于我]]></title>
       <url>/about/index.html</url>
       <content type="html"><![CDATA[<p>大家好，我叫<strong>Bruce Kong</strong>，欢迎大家来到我的地盘。</p>
@@ -2554,12 +2589,6 @@
 <p>老话说：人往高处走水往低处流。在拼搏的年纪不能窝在舒适的港湾，需要风吹雨打的磨炼，需要千锤百炼的敲打，有些棱角就是需要磨平，有些跟头就是要栽一下，总是在曲折中前进，逆境中前行。</p>
 <p>不再少年的你，加油努力吧，一切为了更加美好的明天！</p>
 ]]></content>
-    </entry>
-    
-    <entry>
-      <title><![CDATA[读书]]></title>
-      <url>/reading/index.html</url>
-      <content type="html"></content>
     </entry>
     
   

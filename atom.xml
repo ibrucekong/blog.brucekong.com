@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="https://blog.brucekong.com/"/>
-  <updated>2020-01-13T06:25:30.000Z</updated>
+  <updated>2023-07-31T11:41:22.000Z</updated>
   <id>https://blog.brucekong.com/</id>
   
   <author>
@@ -14,6 +14,39 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>UE 如何关闭自带的安卓屏幕按钮轮盘</title>
+    <link href="https://blog.brucekong.com/posts/2171047824/"/>
+    <id>https://blog.brucekong.com/posts/2171047824/</id>
+    <published>2023-07-31T11:41:22.000Z</published>
+    <updated>2023-07-31T11:41:22.000Z</updated>
+    
+    <content type="html"><![CDATA[<p><strong>UE 如何关闭自带的安卓屏幕按钮轮盘：</strong></p>
+<p>一张图搞定</p>
+<p><img src="https://www.zhreleven.com:18090/images/2023/07/31/UE-.png" alt="image-20230731193049781"></p>
+<p><em>截图版本UE5.2</em></p>
+<p>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a></p>
+<div style="text-align: center;padding: 0; margin: 0;"><br><br>    <img class="wechat-qrcode"  src="https://brucekong-com.gitee.io/images/wechat-blog.png" alt="关注公众号"><br></div>
+
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;&lt;strong&gt;UE 如何关闭自带的安卓屏幕按钮轮盘：&lt;/strong&gt;&lt;/p&gt;
+&lt;p&gt;一张图搞定&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;https://www.zhreleven.com:18090/images/2023/07/31/UE-.png&quot; alt=&quot;image-
+    
+    </summary>
+    
+      <category term="languages" scheme="https://blog.brucekong.com/categories/languages/"/>
+    
+    
+      <category term="UE4" scheme="https://blog.brucekong.com/tags/UE4/"/>
+    
+      <category term="UE5" scheme="https://blog.brucekong.com/tags/UE5/"/>
+    
+  </entry>
   
   <entry>
     <title>Oracle客户端安装配置</title>
@@ -1059,42 +1092,6 @@
       <category term="活动" scheme="https://blog.brucekong.com/tags/%E6%B4%BB%E5%8A%A8/"/>
     
       <category term="吾爱破解" scheme="https://blog.brucekong.com/tags/%E5%90%BE%E7%88%B1%E7%A0%B4%E8%A7%A3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>在Linux中解决跨网段访问服务</title>
-    <link href="https://blog.brucekong.com/posts/3249349784/"/>
-    <id>https://blog.brucekong.com/posts/3249349784/</id>
-    <published>2018-03-27T11:30:36.000Z</published>
-    <updated>2018-03-27T11:30:36.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><strong>在Linux中解决跨网段访问服务：</strong><br>有这样一个场景：在局域网中，两台电脑，A电脑使用交换机（192.168.72.33），B电脑使用WiFi（192.168.1.21），两者的网段不同，导致电脑A无法ping通电脑B。今天就来讲讲怎么在Linux中解决这个问题。</p>
-<a id="more"></a>
-<p>这是我在生产环境中遇到的一个问题，刚开始接触，踩了不小的坑，耽误了很长时间，以此来记录一下。</p>
-<p>针对以上问题的解决办法就是：添加一个路由！</p>
-<p>在A电脑中打开终端<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ route add default gw 192.168.72.1</span><br></pre></td></tr></table></figure><br>加上后，发现可以ping通了，但是重启机器后，又无法ping通了。原因是上面加的路由是临时的，并未在系统中永久保存，如果需要添加永久路由，按照以下方法：</p>
-<ul>
-<li>打开终端，执行：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ vi &#x2F;etc&#x2F;rc.local</span><br></pre></td></tr></table></figure></li>
-<li>在文档后插入一行，输入<em>route add default gw 192.168.72.1</em></li>
-<li>按ESC键退出编辑状态，输入<code>:wq</code>，回车保存即可。</li>
-</ul>
-<p>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a></p>
-<div style="text-align: center;padding: 0; margin: 0;"><br><br>    <img class="wechat-qrcode"  src="https://brucekong-com.gitee.io/images/wechat-blog.png" alt="关注公众号"><br></div>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;strong&gt;在Linux中解决跨网段访问服务：&lt;/strong&gt;&lt;br&gt;有这样一个场景：在局域网中，两台电脑，A电脑使用交换机（192.168.72.33），B电脑使用WiFi（192.168.1.21），两者的网段不同，导致电脑A无法ping通电脑B。今天就来讲讲怎么在Linux中解决这个问题。&lt;/p&gt;
-    
-    </summary>
-    
-      <category term="tools" scheme="https://blog.brucekong.com/categories/tools/"/>
-    
-    
-      <category term="Linux" scheme="https://blog.brucekong.com/tags/Linux/"/>
-    
-      <category term="Route" scheme="https://blog.brucekong.com/tags/Route/"/>
     
   </entry>
   
