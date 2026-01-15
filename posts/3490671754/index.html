@@ -1,0 +1,787 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--bing.com检索-->
+    <meta name="msvalidate.01" content="44FE199290668C7D4BE5EBFA832F518E" />
+    <!-- google.com检索-->
+    <meta name="google-site-verification" content="V8kst8YNVdlYwh67daH_HUjMsgAOYe0xhj2_rxUm8Zo" />
+
+    <title>如何编写高质量的程序 | Bruce Kong</title>
+    <meta name="keywords" content="布鲁斯,布鲁斯孔,布鲁斯·孔,孔·布鲁斯,孔布鲁斯,Bruce Kong,brucekong.com,blog.brucekong.com,www.brucekong.com,Bruce,bruce,GIS,地理信息" />
+    <meta name="description" content="布鲁斯是一个毕业于地理信息专业的骚年，专注于发现与分享当前较为前沿的Web技术和地理信息技术，依托博客平台，广泛交友、交流技术，提高自己，也不断分享新的技术。" />
+    <meta name="author" content="Bruce">
+    
+    <meta name="description" content="学习编程：
+学习任何编程语言都会有一个基本的过程，开始的时候学习基本的语法，然后学习各种库，框架，开始做各种项目。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="如何编写高质量的程序"/>
+    <meta property="og:site_name" content="Bruce Kong"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Bruce Kong" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Bruce Kong</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user" id="side-user" style="cursor: pointer;">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/css/images/avatar.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Bruce Kong</p>
+                        <p class="desc">B/S&amp;Java</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tips/">
+                    tips <span class="right">11 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/languages/">
+                    languages <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tools/">
+                    tools <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/bike/">
+                    bike <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/gis/">
+                    gis <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Oracle/">
+                    Oracle <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/tips/">tips</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>如何编写高质量的程序</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2015-08-24T05:14:25.000Z"><a href="/posts/3490671754/">2015-08-24</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-font"></i>
+    <span>3,522</span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-clock-o"></i>
+	<span>12</span>
+</span>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/心得/" class="chip pink lighten-1">心得</a>
+        
+            <a href="/tags/编程语言/" class="chip pink lighten-1">编程语言</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#如何编写高质量的程序"><span class="section table-of-contents-text">如何编写高质量的程序</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#什么是高质量的程序"><span class="section table-of-contents-text">什么是高质量的程序</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#提高程序质量的重要措施"><span class="section table-of-contents-text">提高程序质量的重要措施</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#提高应变能力"><span class="section table-of-contents-text">提高应变能力</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#控制复杂度"><span class="section table-of-contents-text">控制复杂度</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#使用自动化工具"><span class="section table-of-contents-text">使用自动化工具</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#注意事项"><span class="section table-of-contents-text">注意事项</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#参考资料"><span class="section table-of-contents-text">参考资料</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>学习编程：</strong></p>
+<p>学习任何编程语言都会有一个基本的过程，开始的时候学习基本的语法，然后学习各种库，框架，开始做各种项目。</p>
+<a id="more"></a>
+<h2 id="如何编写高质量的程序"><a href="#如何编写高质量的程序" class="headerlink" title="如何编写高质量的程序"></a>如何编写高质量的程序</h2><p>学习任何编程语言都会有一个基本的过程，开始的时候学习基本的语法，然后学习各种库，框架，开始做各种项目。在做项目的过程中，随着代码量的增加，我们会渐渐感到失去对程序的掌控能力，bug开始增加，牵一发而动全身，顾此失彼。这充分说明了编写高质量程序的重要性，这里的“高质量”主要指程序的正确性，可读性，可维护性。</p>
+<h2 id="什么是高质量的程序"><a href="#什么是高质量的程序" class="headerlink" title="什么是高质量的程序"></a>什么是高质量的程序</h2><p><strong>正确性</strong></p>
+<p>程序正确性的重要程度无需多言，尤其在一些特殊领域，例如芯片制造业，航天业，武器制造业，对程序正确性往往有着极其严格的要求，因为一旦程序出错，代价往往是巨大的。在这些领域，需要使用形式化方法(formal methods)来自动验证程序的正确性，也就是说你需要证明程序的正确性，而不仅仅保证程序在大多数情况下是正确的。在其它领域，对正确性没有这么高要求，形式化方法也不适用，但是我们还是需要使用其它手段，例如测试，code review等等来保证软件的正确性。</p>
+<p><strong>可读性</strong></p>
+<p>可读性可以帮助程序作者理清思路，思路清晰后，程序不容易出错。另外，其它程序员在维护你的代码时，更容易理解你的意思，方便修改bug，方便扩展。</p>
+<p>不要浪费自己的时间，更不要浪费别人的时间。</p>
+<p><strong>可维护性</strong></p>
+<p>这里的可维护性主要指程序应对变化的能力。程序在完成基本功能后，可能会发生各种改变：用户需求变了，性能达不到要求需要重新实现算法，等等。一旦程序的一个点发生改变，其它点如果也需要同时手动改变，那么程序会变的不可控制，出bug的机会会增加。想像一下，我们的程序是一个盒子，在添加新功能时，如果只需要把新模块插到一个地方，新模块就可以被系统使用，这样的程序可维护性是很高的。但是如果添加新功能时，需要把原来的程序盒子拆开，其它模块也需要相应修改，才能加入新模块，这样的程序可维护性就很差。</p>
+<h2 id="提高程序质量的重要措施"><a href="#提高程序质量的重要措施" class="headerlink" title="提高程序质量的重要措施"></a>提高程序质量的重要措施</h2><p><strong>测试</strong></p>
+<p>为什么强调先编写测试用例，再实现程序？先编写测试用例的意义在于，让编写程序的人对程序本身有更好的理解。因为你首先得明白什么样的程序是正确的，然后才能写出正确的程序。测试用例其实是对程序正确性的一种描述。</p>
+<p>为什么强调自动化测试，而不是手动测试？因为自动化测试可以增加测试的便捷度，而人们通常会更多地使用那些便捷度高的东西。我在做个人项目的时候就发现，在编写了自动测试的脚本后，我每改动一点程序，就会自动运行一下脚本，在此之前，我明知道测试很重要，但是还是不会测试的如此频繁。这样的好处是可以方便定位bug，否则在系统经过了大量改动之后，出了bug都不知道可能在哪里。</p>
+<p>在对程序进行重构时，很重要的一点就在于，一定要先写好测试用例，然后每改动一点，就自动测试一下，保证程序始终保持在可控状态。</p>
+<p><strong>良好的编程风格</strong></p>
+<p>良好的编程风格，可以增强程序的可读性，一个结构清晰的程序，你会更容易从中发现错误。另一方面，当程序发生变化时，很可能引入新的bug，良好的编程风格可以减少这种bug的出现。下面是与编程风格相关的一些措施。</p>
+<blockquote>
+<p><strong>风格指南:</strong><br>找一份你使用的编程语言的风格指南，例如Google的编程语言风格指南系列，Python的PEP8，并一直遵守这份指南的内容，如果有自动化工具帮助你保持这种风格，那再好不过。</p>
+<p><strong>最佳实践:</strong><br>寻找你所使用语言的最佳实践，他们可读性强，经过了大量实践的考验，被广泛接受，所以尽可能多地使用他们。</p>
+<p><strong>起一个好名字:</strong><br>变量，函数名，类名，都需要一个好名字。程序本身是对解决方案的一种描述，一个好的名字会增强这种描述性，也会让你的思维集中于解决方案，同时让其它人更容易理解你的解决方案。</p>
+<p><strong>不要直接使用常量:</strong><br>在程序中直接使用的常量，一般被称为 Magic Numbers， 一方面它不利于其它程序员对程序的理解，因为没有人知道这个常量代表什么。另一方面，多个常量之间可能是有关系的，直接使用常量根本反应不出这种关系。</p>
+<p><strong>同一变量名不要有多种含义:</strong><br>首先这种做法降低了可读性，一个变量前面一个含义，后面一个含义，这会给阅读程序的人带来困扰。</p>
+<p><strong>尽可能保证变量作用域小:</strong><br>尽量减少变量定义的点与变量最后一次使用的点之间的跨度，这样可以使变量与其相关代码变得紧凑，提高可读性，不用在使用变量时再去很多的地方查看其它引用。</p>
+<p><strong>保证函数短小精悍:</strong><br>过长的函数会让读者陷入细节的泥潭，还需要前后来回看才能明白前面一大段和后面一大段代码的关系。将函数分解，然后给函数起一个好名字，读者马上就能明白这段代码在做什么。</p>
+</blockquote>
+<h2 id="提高应变能力"><a href="#提高应变能力" class="headerlink" title="提高应变能力"></a>提高应变能力</h2><blockquote>
+<p>程序应对变化的能力强，可扩展性就强，也更容易在变化时保证正确性，这样的程序可维护性强。下面是一些提高程序应变能力的措施。</p>
+<p><strong>不要使用常量:</strong><br>不要使用常量的另一个原因在于常量可能变化，如果程序中多次引入了这个常量，那么一旦这个常量要发生变化，就需要同时改动许多地方，这时候，如果有些地方没有改，就会使程序不一致，可能引入bug。</p>
+<p><strong>同一变量名不要有多种含义:</strong><br>同一变量名不要有多种含义另一个原因在于，多种含义之间可能会相互影响，第一次写程序时你可能记得这些影响，但是以后对程序进行改动的时候，你可能就忘记了。例如函数内一段代码执行后，索引i 的值等于一个长度，但是这段代码后，你没有将i赋值给另一个变量len，而是直接使用它。等过一段时间后，你或者其它人修改这段程序时，很可能忘了这段代码执行后i的值需要等于一个长度，因为这是一种隐式的约定，所以很容易被忽视。</p>
+<p><strong>尽可能保证变量作用域小:</strong><br>保证变量作用域小也有利于重构。当一个函数变得很长时，你可能需要将它分解成多个函数，这时候，如果变量跨度小，就可以很方便地提取函数，不用来回查找与此函数相关的变量的引用。</p>
+<p><strong>减少代码重复:</strong><br>如果有一段代码在很多地方重复，这就告诉你，需要把他们提取成一个函数。因为代码的重复意味着这是一块独立的逻辑，独立的逻辑可以抽象成一个函数。另一方面，一旦这段逻辑需要发生变化，只需要修改这个函数就可以了，不需要把所有地方都手动修改一遍。</p>
+<p><strong>数据驱动:</strong><br>数据驱动的意思是用数据表示来代替程序逻辑。例如，我们需要一个程序，判断某个月有几天，在实现时，最好用一个数组表示各个月的天数，需要哪个月直接查询就好，而不要使用大量的if语句来作逻辑判断。这只是一个小例子，它提醒我们，如果程序中含有大量判断语句，就应该想一想，能不能用数据来驱动逻辑，这样需要修改的时候，我们直接修改数据就好，而不用修改程序逻辑。</p>
+</blockquote>
+<p>我曾经接手过一个项目，这个项目其实是一个工具集，根据用户的选择，调用不同的工具。原始的代码里，就使用了大量if语句，并且每个工具其实调用方式和代码都很相似。这样，我每次添加新工具时，就需要找到多个if语句块，作相应修改。如果用数据驱动的话，我们完全可以去掉这些if语句，在用户的选择与工具之间建立对应关系，这样每当新添加工具时，只需要把工具加到系统里，系统会根据这个表直接找到这个工具。这其实和之前举的盒子的例子很相似，添加新工具时，只需要把工具插到盒子上的槽上，根本不用打开盒子。这就大大提高了程序的可扩展性。</p>
+<h2 id="控制复杂度"><a href="#控制复杂度" class="headerlink" title="控制复杂度"></a>控制复杂度</h2><p>要保证软件的高质量，很重要的一方面在于控制复杂度。控制复杂度的一个很重要的手段在于分解复杂的事物。我们之所以觉得一个事物复杂，是因为同一时间需要关心的事情太多，把复杂事物分解后，每次我们只需要关心很少的事情，这样就控制住了复杂度。</p>
+<blockquote>
+<p>不要使函数或类过大<br>如果一个函数或类过大，他们会变得过分复杂，你同一时间需要关心许多细节。将函数或类变小之后，你的思维在一段时间内可以集中在同一个抽象层次，而不必过于深入其细节，这样更容易发现程序中的缺陷，因为你每次只需要关心很少的事情。在最高层，你只需要关心模块之间的关系，关心算法的流程，不必关心模块内部的事情。在最低层，你只需要关心一个模块内部的事情，而不必关心其它事情。</p>
+<p>不要使函数参数过多<br>函数参数过多可能说明这个函数负责了太多的事情，你需要将这个函数分解。另一方面，你需要从逻辑上考虑，这些参数是不是一个整体，如果是一个整体，那么直接传过来一个结构体，或者传过来一个对象，是不是更合适？</p>
+<p>不要使抽象层次过多<br>如果一个函数或类被分解为过多的抽象层次，在模块内部，你确实只需要关心很小的事情，但是这时候，由于模块过多，抽象层次过深，他们之间的关系又使复杂度增长起来。</p>
+</blockquote>
+<h2 id="使用自动化工具"><a href="#使用自动化工具" class="headerlink" title="使用自动化工具"></a>使用自动化工具</h2><p>自动化工具迫使我们养成良好的编程习惯，而且不容易出错。再次强调:</p>
+<p><code>工具越是使用方便，你越会频繁使用它。</code><br>所以，尽可能地让你的工具使用便捷。<br>例如，使用一些静态检测工具在编辑时自动帮助你检测程序的不良风格；使用重构工具帮助你重构；使用自动化测试工具在保存时自动运行测试等等。</p>
+<h2 id="注意事项"><a href="#注意事项" class="headerlink" title="注意事项"></a>注意事项</h2><p>没有什么事情是一成不变的，所有的法则都需要考虑具体的情况。如果你要用一个法则，需要真正明白自己为什么要用，需要去权衡，而不要为了能用上这个法则而生搬硬套。</p>
+<p>好好问问自己：</p>
+<blockquote>
+<ul>
+<li>变化真的存在么?</li>
+<li>真的需要抽象么？</li>
+<li>真的需要面向对象么？</li>
+<li>真的xxx么？</li>
+</ul>
+</blockquote>
+<h2 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h2><p>这篇文章是我这段时间阅读过一些书后的想法，书目有:</p>
+<blockquote>
+<ul>
+<li>代码大全(Code Complete)</li>
+<li>重构——改善既有代码的设计(Refactoring Improving the Design of Existing Code)</li>
+<li>程序设计实践(The Proactice of Programming)</li>
+</ul>
+</blockquote>
+<p>在阅读这些书的同时，我还在维护其它人的代码，做自己的个人项目。在阅读的过程中，我会不断地想到我做的项目哪里有问题，可以用书中提到的方法去修改，因此印象深刻。这些书单纯读也非常有好处，但是如果可以结合到自己的项目中，会有更大裨益。因为只有产生了强烈的共鸣，才能保证真正理解了一个东西。</p>
+<p>上面提到的一些措施，都是我遇到过的，所以印象比较深刻，这几本书中还有大量提高程序质量的方法，我这里只是一个引子，希望给有心人打开一扇窗户。</p>
+<p>原文链接 : <a href="http://minixalpha.github.io/%E6%80%9D%E6%83%B3/2014/01/13/write_high_quality_program.html" target="_blank" rel="noopener">Minixalpha Blog</a></p>
+<div style="text-align: center;padding: 0; margin: 0;"><br>    <img class="wechat-qrcode"  src="https://cdn.brucekong.com/wechat-blog.png" alt="关注公众号"><br></div>
+
+                
+<p class="pink-link-context">
+    <a href="/posts/1500121752/" rel="next" title="控制台，终端，tty，shell等概念的区别">
+    上一篇：控制台，终端，tty，shell等概念的区别
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/posts/417703024/" rel="next" title="Markdown学习入门">
+    下一篇：Markdown学习入门
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjEyNC84Njg4" style="color: #D60036;text-align: center">
+        <script type="text/javascript">
+            (function(d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse orange darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/ibrucekong" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="https://raytaylorlin.github.io/" target="_blank">raytaylorism</a>
+                
+                    <a class="social-link" href="https://ibrucekong.github.io/" target="_blank">ibrucekong</a>
+                
+                    <a class="social-link" href="https://is.boxmoe.cn" target="_blank">Infinite&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://bertliu.com/" target="_blank">Bert Liu&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://home.cnblogs.com/u/onsummer/" target="_blank">秋意正寒</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2018 brucekong.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">| 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+            <p class="right" style="margin-top: 0;padding-right: 5px"><span class="post-count">全站共</span>39.8k字</p>
+        </div>
+    </div>
+    <div hidden>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272856823'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1272856823%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function(e) {
+
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode').not('.wechat-qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            //$(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+                $(".container.main-container").css("margin-top", "0px");
+            }else {
+                $(".container.main-container").css("margin-top", "30px");
+            }
+
+          window.onload = function () {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让dom加载好之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                // 反之
+                $("#live2dcanvas").show();
+              }
+            }
+
+            // 监听窗口变化
+            $(window).resize(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让窗口变化之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                $("#live2dcanvas").show();
+              }
+            });
+
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },200);
+            });
+
+            $('.btn-floating.waves-effect.button-collapse.orange.darken-1').click(function () {
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },100);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                        $("#main-menu").css("transform", "translateX(-100%)");
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+
+            // 添加Ctrl+F全局快捷键调出搜索框
+            document.onkeydown = function(e) {
+                    var keyCode = e.keyCode || e.which || e.charCode;
+                    var ctrlKey = e.ctrlKey || e.metaKey;
+                    if(ctrlKey && keyCode == 70) {
+                        $('.menu-search.modal-trigger ').click();
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (keyCode) return true;
+            }
+
+            $("#side-user").click(function () {
+                location.href = '/about/';
+            })
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+
+        // 添加百度推送
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d6bd33016c98e674bcda9edcd27f708c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

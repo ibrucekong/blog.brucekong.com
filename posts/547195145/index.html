@@ -1,0 +1,787 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--bing.com检索-->
+    <meta name="msvalidate.01" content="44FE199290668C7D4BE5EBFA832F518E" />
+    <!-- google.com检索-->
+    <meta name="google-site-verification" content="V8kst8YNVdlYwh67daH_HUjMsgAOYe0xhj2_rxUm8Zo" />
+
+    <title>Nginx学习入门 | Bruce Kong</title>
+    <meta name="keywords" content="布鲁斯,布鲁斯孔,布鲁斯·孔,孔·布鲁斯,孔布鲁斯,Bruce Kong,brucekong.com,blog.brucekong.com,www.brucekong.com,Bruce,bruce,GIS,地理信息" />
+    <meta name="description" content="布鲁斯是一个毕业于地理信息专业的骚年，专注于发现与分享当前较为前沿的Web技术和地理信息技术，依托博客平台，广泛交友、交流技术，提高自己，也不断分享新的技术。" />
+    <meta name="author" content="Bruce">
+    
+    <meta name="description" content="Nginx让系统部署花样百出：在系统部署时，遇到了一个需要多方考虑的安全问题，出于架构师老大的一句话，说先用Nginx做下代理（后来讨论，此方法治标不治本，就放弃了此方法，但是Nginx还是看了那么一会儿），菜鸟如我百度谷歌一番，稍微了解了一些Nginx的最基本用法。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="Nginx学习入门"/>
+    <meta property="og:site_name" content="Bruce Kong"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Bruce Kong" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Bruce Kong</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user" id="side-user" style="cursor: pointer;">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/css/images/avatar.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Bruce Kong</p>
+                        <p class="desc">B/S&amp;Java</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tips/">
+                    tips <span class="right">11 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/languages/">
+                    languages <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tools/">
+                    tools <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/bike/">
+                    bike <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/gis/">
+                    gis <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Oracle/">
+                    Oracle <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/languages/">languages</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>Nginx学习入门</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2018-01-12T10:26:06.000Z"><a href="/posts/547195145/">2018-01-12</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-font"></i>
+    <span>1,254</span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-clock-o"></i>
+	<span>5</span>
+</span>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Nginx/" class="chip pink lighten-1">Nginx</a>
+        
+            <a href="/tags/代理/" class="chip pink lighten-1">代理</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#Nginx简介"><span class="section table-of-contents-text">Nginx简介</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#location配置"><span class="section table-of-contents-text">location配置</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#使用root、alias和proxy-pass"><span class="section table-of-contents-text">使用root、alias和proxy_pass</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#使用rewrite、proxy-pass和正则表达式"><span class="section table-of-contents-text">使用rewrite、proxy_pass和正则表达式</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>Nginx让系统部署花样百出：</strong><br>在系统部署时，遇到了一个需要多方考虑的安全问题，出于架构师老大的一句话，说先用Nginx做下代理（后来讨论，此方法治标不治本，就放弃了此方法，但是Nginx还是看了那么一会儿），菜鸟如我百度谷歌一番，稍微了解了一些Nginx的最基本用法。</p>
+<a id="more"></a>
+<h2 id="Nginx简介"><a href="#Nginx简介" class="headerlink" title="Nginx简介"></a>Nginx简介</h2><p>上面已经说了是大佬的一句话，其实在此之前我也使用过一些简单的反向代理，解决跨域问题（学的就是毛毛雨），在生产环境中还没真正使用过。那么老大说道了Nginx，那学习之前得了解Nginx是什么？能做什么，优势是什么？</p>
+<p><strong>是什么</strong></p>
+<p>是一个高性能的<a href="https://baike.baidu.com/item/HTTP" target="_blank" rel="noopener">HTTP</a>和<a href="https://baike.baidu.com/item/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86" target="_blank" rel="noopener">反向代理</a>服务器，也是一个IMAP/POP3/SMTP服务器。</p>
+<p><strong>能做什么？</strong></p>
+<ul>
+<li>反向代理</li>
+<li>正向代理</li>
+<li>HTTP服务器</li>
+<li>负载均衡（什么鬼，，，）</li>
+</ul>
+<p><strong>优势有哪些？</strong></p>
+<ul>
+<li>轻量web服务器</li>
+<li>适合做静态请求和反向（不适合做动态请求，动态用apache）</li>
+<li>抗高并发，nginx 处理请求异步非阻塞，使用较低的资源支持更高的并发数</li>
+<li>负载均衡</li>
+</ul>
+<h2 id="location配置"><a href="#location配置" class="headerlink" title="location配置"></a>location配置</h2><p> 以下内容只讲了自己用到的，在讲解方面可能没有那么标准，差不多都是自己理解和实践的，希望能让大家更容易理解和使用吧！</p>
+<p>基本语法：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> [=|~|~*|^~] /uri/ &#123; </span><br><span class="line">  … </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>= 严格匹配。如果这个查询匹配，那么将停止搜索并立即处理此请求。</li>
+<li>~ 为区分大小写匹配(可用正则表达式)</li>
+<li>!~为区分大小写不匹配</li>
+<li>~* 为不区分大小写匹配(可用正则表达式)</li>
+<li>!~*为不区分大小写不匹配</li>
+<li>^~ 如果把这个前缀用于一个常规字符串,那么告诉nginx 如果路径匹配那么不测试正则表达式。</li>
+</ol>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> / &#123;</span><br><span class="line">  <span class="attribute">root</span>   html;</span><br><span class="line">  <span class="attribute">index</span>  index.html index.htm;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="使用root、alias和proxy-pass"><a href="#使用root、alias和proxy-pass" class="headerlink" title="使用root、alias和proxy_pass"></a>使用root、alias和proxy_pass</h2><p>由于最近在看<a href="http://www.layui.com" target="_blank" rel="noopener">layui</a>的一些东西（不是广告），就顺手拿来做个演示！（以下提到的layui，指的是layui官方提供<a href="http://www.layui.com/template/fly/" target="_blank" rel="noopener">社区模板</a>的html目录。</p>
+<p>阅读到这时，如果你还没有nginx环境，请点击<a href="">下载</a>搭建你的环境，</p>
+<ul>
+<li>点击<a href="http://nginx.org" target="_blank" rel="noopener">Nginx官网</a>，点击最新带有<code>mainline version</code>字样的链接，建议下载<code>Stable version</code>版本；</li>
+<li>下载得到一个zip包，解压到你想放置的目录，双击启动<code>nginx.exe</code></li>
+</ul>
+<blockquote>
+<p> <em>另外再说明一下实践的环境，本地解析使用的80端口，反向代理转发的url不带端口</em></p>
+<p> <em>以下代码均在<code>nginx/conf/</code>文件夹下的<code>nginx.conf</code>文件中修改</em></p>
+<p> <em>在修改保存<code>nginx.conf</code>后，记得使用<code>nginx -s reload</code>重载配置文件，使其生效</em></p>
+</blockquote>
+<p>使用alias 设置本地虚拟目录，后面必须加上 / ，alias 指定本地目录，例如Windows系统上设置为 <code>D:/html/app/</code>，若是使用mac或linux，路径最后也要加上 / ，例如 <code>~/html/app/</code> or <code>/home/bruce/html/app/</code>。</p>
+<p>以下两个方法都能跳转到layui中，这个相当于直接访问 <code>D:/ComSoftwares/nginx-1.13.7/html/layui</code>目录，可以理解为在root目录下，访问layui目录：</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span><span class="regexp"> ^~</span> /layui &#123;</span><br><span class="line">	<span class="attribute">root</span> D:/ComSoftwares/nginx-<span class="number">1</span>.<span class="number">13</span>.<span class="number">7</span>/html/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>访问<code>localhost/alayui</code>或<code>localhost/alayui/</code>自动代理到<code>D:/ComSoftwares/nginx-1.13.7/html/layui/</code>目录下</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /alayui &#123;</span><br><span class="line">	<span class="attribute">alias</span> D:/ComSoftwares/nginx-<span class="number">1</span>.<span class="number">13</span>.<span class="number">7</span>/html/layui/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用 <code>=</code> 匹配访问链接 只能匹配<code>localhost/blayui</code>或者<code>localhost/blayui/</code>，对于子目录无法进行访问<br>即对<code>localhost/blayui/jie/add.html</code> 无法进行访问<br>可以看出 = 是严格匹配</p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> = /blayui/ &#123;</span><br><span class="line">	<span class="attribute">proxy_pass</span> http://localhost/layui/;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>三种方法的利弊：</p>
+<ul>
+<li>第一种和没设置一样（ 为了学习root）</li>
+<li>第二种根据访问的链接，去代理到一定的目录下，即代理了当前链接，又代理了子目录</li>
+<li>第三种只严格匹配了当前链接，对于子目录无法进行访问</li>
+</ul>
+<blockquote>
+<p> <em>推荐使用第二种：alias方法</em></p>
+</blockquote>
+<h2 id="使用rewrite、proxy-pass和正则表达式"><a href="#使用rewrite、proxy-pass和正则表达式" class="headerlink" title="使用rewrite、proxy_pass和正则表达式"></a>使用rewrite、proxy_pass和正则表达式</h2><p>下面的方法统一使用了正则表达式来解决访问链接<br>添加访问目录为<code>/apis</code>的代理配置，用<code>127.0.0.1:80/apis</code>重定向<a href="http://www.layui.com，" target="_blank" rel="noopener">http://www.layui.com，</a><br>在ajax中访问<code>/apis/demo/table/user</code>,相当于访问<a href="http://www.layui.com/demo/table/user" target="_blank" rel="noopener">http://www.layui.com/demo/table/user</a></p>
+<figure class="highlight nginx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="attribute">location</span> /apis &#123;</span><br><span class="line">  <span class="attribute">rewrite</span> <span class="regexp"> ^/apis/(.*)$</span> /<span class="variable">$1</span> <span class="literal">break</span>;</span><br><span class="line">  <span class="attribute">proxy_pass</span>   http://www.layui.com;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p> 参考学习 <a href="http://blog.csdn.net/tjcyjd/article/details/50897959" target="_blank" rel="noopener">http://blog.csdn.net/tjcyjd/article/details/50897959</a></p>
+</blockquote>
+<p>总的来说，alias使用简单粗暴，转发本地目录；而正则表达式使用起来更爽，处理的情况更多，让更多事情变得简单，运行高效，低资源占用，代理强大的处理方法。</p>
+<p>由于学习Nginx的时间有限，只针对自己遇到的问题进行了研究，如若有不对或不合适的地方，请批评指正，谢谢！<br>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a></p>
+<div style="text-align: center;padding: 0; margin: 0;"><br>    <img class="wechat-qrcode"  src="https://cdn.brucekong.com/wechat-blog.png" alt="关注公众号"><br></div>
+
+                
+<p class="pink-link-context">
+    <a href="/posts/224769818/" rel="next" title="吾爱破解论坛2018年3月13日十周年开放注册通知">
+    上一篇：吾爱破解论坛2018年3月13日十周年开放注册通知
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/posts/3718307484/" rel="next" title="Cesium简介与环境搭建">
+    下一篇：Cesium简介与环境搭建
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjEyNC84Njg4" style="color: #D60036;text-align: center">
+        <script type="text/javascript">
+            (function(d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse orange darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/ibrucekong" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="https://raytaylorlin.github.io/" target="_blank">raytaylorism</a>
+                
+                    <a class="social-link" href="https://ibrucekong.github.io/" target="_blank">ibrucekong</a>
+                
+                    <a class="social-link" href="https://is.boxmoe.cn" target="_blank">Infinite&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://bertliu.com/" target="_blank">Bert Liu&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://home.cnblogs.com/u/onsummer/" target="_blank">秋意正寒</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2018 brucekong.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">| 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+            <p class="right" style="margin-top: 0;padding-right: 5px"><span class="post-count">全站共</span>39.8k字</p>
+        </div>
+    </div>
+    <div hidden>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272856823'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1272856823%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function(e) {
+
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode').not('.wechat-qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            //$(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+                $(".container.main-container").css("margin-top", "0px");
+            }else {
+                $(".container.main-container").css("margin-top", "30px");
+            }
+
+          window.onload = function () {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让dom加载好之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                // 反之
+                $("#live2dcanvas").show();
+              }
+            }
+
+            // 监听窗口变化
+            $(window).resize(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让窗口变化之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                $("#live2dcanvas").show();
+              }
+            });
+
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },200);
+            });
+
+            $('.btn-floating.waves-effect.button-collapse.orange.darken-1').click(function () {
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },100);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                        $("#main-menu").css("transform", "translateX(-100%)");
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+
+            // 添加Ctrl+F全局快捷键调出搜索框
+            document.onkeydown = function(e) {
+                    var keyCode = e.keyCode || e.which || e.charCode;
+                    var ctrlKey = e.ctrlKey || e.metaKey;
+                    if(ctrlKey && keyCode == 70) {
+                        $('.menu-search.modal-trigger ').click();
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (keyCode) return true;
+            }
+
+            $("#side-user").click(function () {
+                location.href = '/about/';
+            })
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+
+        // 添加百度推送
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d6bd33016c98e674bcda9edcd27f708c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

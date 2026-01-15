@@ -1,0 +1,767 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--bing.com检索-->
+    <meta name="msvalidate.01" content="44FE199290668C7D4BE5EBFA832F518E" />
+    <!-- google.com检索-->
+    <meta name="google-site-verification" content="V8kst8YNVdlYwh67daH_HUjMsgAOYe0xhj2_rxUm8Zo" />
+
+    <title>IE和Chrome带有多个参数的互相跳转 | Bruce Kong</title>
+    <meta name="keywords" content="布鲁斯,布鲁斯孔,布鲁斯·孔,孔·布鲁斯,孔布鲁斯,Bruce Kong,brucekong.com,blog.brucekong.com,www.brucekong.com,Bruce,bruce,GIS,地理信息" />
+    <meta name="description" content="布鲁斯是一个毕业于地理信息专业的骚年，专注于发现与分享当前较为前沿的Web技术和地理信息技术，依托博客平台，广泛交友、交流技术，提高自己，也不断分享新的技术。" />
+    <meta name="author" content="Bruce">
+    
+    <meta name="description" content="IE &amp;amp; Chrome的互相跳转：简单需求，简单实现。从IE跳转到Chrome，介绍使用ActiveXObject进行操作跳转，并实现多个参数的传递；从Chrome跳转到IE，介绍使用修改注册表的形式进行操作。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="IE和Chrome带有多个参数的互相跳转"/>
+    <meta property="og:site_name" content="Bruce Kong"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Bruce Kong" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Bruce Kong</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user" id="side-user" style="cursor: pointer;">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/css/images/avatar.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Bruce Kong</p>
+                        <p class="desc">B/S&amp;Java</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tips/">
+                    tips <span class="right">11 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/languages/">
+                    languages <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tools/">
+                    tools <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/bike/">
+                    bike <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/gis/">
+                    gis <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Oracle/">
+                    Oracle <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/languages/">languages</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>IE和Chrome带有多个参数的互相跳转</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2018-08-23T08:35:20.000Z"><a href="/posts/1077207737/">2018-08-23</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-font"></i>
+    <span>784</span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-clock-o"></i>
+	<span>3</span>
+</span>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Chrome/" class="chip pink lighten-1">Chrome</a>
+        
+            <a href="/tags/IE/" class="chip pink lighten-1">IE</a>
+        
+            <a href="/tags/跳转/" class="chip pink lighten-1">跳转</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#IE-to-Chrome"><span class="section table-of-contents-text">IE to Chrome</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#单参or无参"><span class="section table-of-contents-text">单参or无参</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#多参传递"><span class="section table-of-contents-text">多参传递</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#Chrome-to-IE"><span class="section table-of-contents-text">Chrome to IE</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#配置跳转环境"><span class="section table-of-contents-text">配置跳转环境</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#单参or无参-1"><span class="section table-of-contents-text">单参or无参</span></a></li><li class="section table-of-contents-item section table-of-contents-level-4"><a class="section table-of-contents-link" href="#多参传递-1"><span class="section table-of-contents-text">多参传递</span></a></li></ol></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#写在最后"><span class="section table-of-contents-text">写在最后</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>IE &amp; Chrome的互相跳转：</strong><br>简单需求，简单实现。从IE跳转到Chrome，介绍使用<code>ActiveXObject</code>进行操作跳转，并实现多个参数的传递；从Chrome跳转到IE，介绍使用修改注册表的形式进行操作。</p>
+<a id="more"></a>
+<h3 id="IE-to-Chrome"><a href="#IE-to-Chrome" class="headerlink" title="IE to Chrome"></a>IE to Chrome</h3><p>在IE中打开Chrome方法简单且粗暴，<code>talk is cheap, show me the code</code>。</p>
+<h4 id="单参or无参"><a href="#单参or无参" class="headerlink" title="单参or无参"></a>单参or无参</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var objShell &#x3D; new ActiveXObject(&quot;WScript.Shell&quot;);</span><br><span class="line">&#x2F;&#x2F; 无参</span><br><span class="line">objShell.Run(&quot;cmd.exe &#x2F;c start chrome www.baidu.com&quot;,0,true);</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/ie-to-chrome-no-param.png" alt="无参"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var objShell &#x3D; new ActiveXObject(&quot;WScript.Shell&quot;);</span><br><span class="line">&#x2F;&#x2F; 单参</span><br><span class="line">objShell.Run(&quot;cmd.exe &#x2F;c start chrome www.baidu.com?id&#x3D;1&quot;,0,true);</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/ie-to-chrome-one-param.png" alt="单参"></p>
+<p>上述情况都没问题，一切都很顺利，下面来看看多参的情况。</p>
+<h4 id="多参传递"><a href="#多参传递" class="headerlink" title="多参传递"></a>多参传递</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 如果要传 id&#x3D;1, name&#x3D;bruce 两个参数</span><br><span class="line">var objShell &#x3D; new ActiveXObject(&quot;WScript.Shell&quot;);</span><br><span class="line">objShell.Run(&quot;cmd.exe &#x2F;c start chrome www.baidu.com?id&#x3D;1&amp;name&#x3D;bruce&quot;,0,true);</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/ie-to-chrome-one-param.png" alt="多参"></p>
+<p>什么鬼，我明明传了两个参数啊，怎么只显示了一个，只显示了第一个。What the hell is going on?</p>
+<p>原来在cmd的世界里，它有自己的一套转义语法，可参考<a href="https://www.cnblogs.com/newsea/p/3866413.html" target="_blank" rel="noopener">链接</a>。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">var objShell &#x3D; new ActiveXObject(&quot;WScript.Shell&quot;);</span><br><span class="line">&#x2F;&#x2F; 经过修正，将&amp;符号进行转义，使用^&amp;代替&amp;</span><br><span class="line">objShell.Run(&quot;cmd.exe &#x2F;c start chrome www.baidu.com?id&#x3D;1^&amp;name&#x3D;bruce&quot;,0,true);</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/ie-to-chrome-more-param.png" alt="多参"></p>
+<p>看完在IE中打开Chrome了，现在来瞅瞅在Chrome中打开IE的方法吧。</p>
+<h3 id="Chrome-to-IE"><a href="#Chrome-to-IE" class="headerlink" title="Chrome to IE"></a>Chrome to IE</h3><p>在Chrome中打开IE，并传多参数，相比IE中打开Chrome要麻烦一些，大致分为以下几个方面。</p>
+<h4 id="配置跳转环境"><a href="#配置跳转环境" class="headerlink" title="配置跳转环境"></a>配置跳转环境</h4><ol>
+<li><p>regOpenIE.reg</p>
+<p>1.1 在D盘下新建openIE文件夹，路径为<code>D:\openIE\</code></p>
+<p>1.2 在openIE路径下新建<code>regOpenIE.reg</code>，并将如下内容复制进该文件：</p>
+</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">Windows Registry Editor Version 5.00</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\openIE]</span><br><span class="line">@&#x3D;&quot;URL:Alert Protocol&quot;</span><br><span class="line">&quot;URL Protocol&quot;&#x3D;&quot;&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\openIE\DefaultIcon]</span><br><span class="line">@&#x3D;&quot;iexplore.exe,1&quot;</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\openIE\shell]</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\openIE\shell\open]</span><br><span class="line"></span><br><span class="line">[HKEY_CLASSES_ROOT\openIE\shell\open\command]</span><br><span class="line">@&#x3D;&quot;cmd &#x2F;c set m&#x3D;%1 &amp; \&quot;D:\\alert\\openIE.bat\&quot; %%m%% &amp; exit&quot;</span><br></pre></td></tr></table></figure>
+<p>其中文本中的最后一行<code>D:\\alert\\openIE.bat\</code>是当前文件的目录。</p>
+<ol start="2">
+<li>在openIE文件夹下新建<code>openIE.bat</code>，并将如下内容复制进该文件：</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">@echo off</span><br><span class="line">set m&#x3D;%m:openIE:&#x3D;%</span><br><span class="line">set m&#x3D;&quot;%m:separator&#x3D;&amp;%&quot;</span><br><span class="line">start &quot;&quot; &quot;C:\\Program Files\\internet explorer\\iexplore.exe&quot; %m%</span><br><span class="line">exit</span><br></pre></td></tr></table></figure>
+<p>其中文本中<code>start</code>一行中<code>C:\\Program Files\\internet explorer\\iexplore.exe</code>是你电脑中IE的路径，注意分隔符是双反斜杠。</p>
+<h4 id="单参or无参-1"><a href="#单参or无参-1" class="headerlink" title="单参or无参"></a>单参or无参</h4><ol>
+<li>在布局中加入以下内容。</li>
+</ol>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;openIE:www.baidu.com&quot;&gt;Chrome to IE&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/chrome-to-ie-no-param.png" alt="无参"></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;openIE:www.baidu.com?id&#x3D;1&quot;&gt;Chrome to IE&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/chrome-to-ie-one-param.png" alt="单参"></p>
+<h4 id="多参传递-1"><a href="#多参传递-1" class="headerlink" title="多参传递"></a>多参传递</h4><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; 和测试IE跳转Chrome一样，传 id&#x3D;1, name&#x3D;bruce 两个参数，看下效果是不是能出来</span><br><span class="line">&lt;a href&#x3D;&quot;openIE:www.baidu.com?id&#x3D;1&amp;name&#x3D;bruce&quot;&gt;Chrome to IE&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/chrome-to-ie-one-param.png" alt="多参"></p>
+<p>同样的思维，是不是<code>&amp;</code>又被转义或者影响到了呢，查阅资料，有<a href="https://blog.csdn.net/java_zys/article/details/51837899" target="_blank" rel="noopener">博主</a>给出了一个解决方案，使用无转义的字符去替代的方案(就是上面<code>openIE.bat</code>中第三行给出的内容)。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">&lt;a href&#x3D;&quot;openIE:www.baidu.com?id&#x3D;1separatorname&#x3D;bruce&quot;&gt;Chrome to IE&lt;&#x2F;a&gt;</span><br></pre></td></tr></table></figure>
+<p><img src="https://cdn.brucekong.com/chrome-to-ie-more-param.png" alt="多参"></p>
+<p>使用参数中的<code>separator</code>代替<code>&amp;</code>，完成解析。</p>
+<h3 id="写在最后"><a href="#写在最后" class="headerlink" title="写在最后"></a>写在最后</h3><p>IE和Chrome的跳转可能还有其他方法，如果朋友找到更加简单的方法，请在下面回复告诉博主，感激不尽。</p>
+<div style="text-align: center"><img class="wechat-qrcode"  src="https://cdn.brucekong.com/wechat-blog.png" alt="关注公众号"><br></div>
+
+                
+<p class="pink-link-context">
+    <a href="/posts/1380263657/" rel="next" title="前端地图应用中几种监听事件">
+    上一篇：前端地图应用中几种监听事件
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/posts/2119619363/" rel="next" title="欢迎Shizuku入住博客">
+    下一篇：欢迎Shizuku入住博客
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjEyNC84Njg4" style="color: #D60036;text-align: center">
+        <script type="text/javascript">
+            (function(d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse orange darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/ibrucekong" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="https://raytaylorlin.github.io/" target="_blank">raytaylorism</a>
+                
+                    <a class="social-link" href="https://ibrucekong.github.io/" target="_blank">ibrucekong</a>
+                
+                    <a class="social-link" href="https://is.boxmoe.cn" target="_blank">Infinite&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://bertliu.com/" target="_blank">Bert Liu&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://home.cnblogs.com/u/onsummer/" target="_blank">秋意正寒</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2018 brucekong.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">| 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+            <p class="right" style="margin-top: 0;padding-right: 5px"><span class="post-count">全站共</span>39.8k字</p>
+        </div>
+    </div>
+    <div hidden>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272856823'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1272856823%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function(e) {
+
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode').not('.wechat-qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            //$(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+                $(".container.main-container").css("margin-top", "0px");
+            }else {
+                $(".container.main-container").css("margin-top", "30px");
+            }
+
+          window.onload = function () {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让dom加载好之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                // 反之
+                $("#live2dcanvas").show();
+              }
+            }
+
+            // 监听窗口变化
+            $(window).resize(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让窗口变化之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                $("#live2dcanvas").show();
+              }
+            });
+
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },200);
+            });
+
+            $('.btn-floating.waves-effect.button-collapse.orange.darken-1').click(function () {
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },100);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                        $("#main-menu").css("transform", "translateX(-100%)");
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+
+            // 添加Ctrl+F全局快捷键调出搜索框
+            document.onkeydown = function(e) {
+                    var keyCode = e.keyCode || e.which || e.charCode;
+                    var ctrlKey = e.ctrlKey || e.metaKey;
+                    if(ctrlKey && keyCode == 70) {
+                        $('.menu-search.modal-trigger ').click();
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (keyCode) return true;
+            }
+
+            $("#side-user").click(function () {
+                location.href = '/about/';
+            })
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+
+        // 添加百度推送
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d6bd33016c98e674bcda9edcd27f708c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

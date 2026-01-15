@@ -1,0 +1,796 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--bing.com检索-->
+    <meta name="msvalidate.01" content="44FE199290668C7D4BE5EBFA832F518E" />
+    <!-- google.com检索-->
+    <meta name="google-site-verification" content="V8kst8YNVdlYwh67daH_HUjMsgAOYe0xhj2_rxUm8Zo" />
+
+    <title>基于GIS的团队管理系统的简介 | Bruce Kong</title>
+    <meta name="keywords" content="布鲁斯,布鲁斯孔,布鲁斯·孔,孔·布鲁斯,孔布鲁斯,Bruce Kong,brucekong.com,blog.brucekong.com,www.brucekong.com,Bruce,bruce,GIS,地理信息" />
+    <meta name="description" content="布鲁斯是一个毕业于地理信息专业的骚年，专注于发现与分享当前较为前沿的Web技术和地理信息技术，依托博客平台，广泛交友、交流技术，提高自己，也不断分享新的技术。" />
+    <meta name="author" content="Bruce">
+    
+    <meta name="description" content="基于地图的移动团队管理系统：
+团队管理已经从传统的文字通讯，变成了基于地图的移动团队管理系统，让队员实时显示在地图上，系统使用期间还实时上传位置到服务器，便于管理者监督、管理、统计和分析。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="基于GIS的团队管理系统的简介"/>
+    <meta property="og:site_name" content="Bruce Kong"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Bruce Kong" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Bruce Kong</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user" id="side-user" style="cursor: pointer;">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/css/images/avatar.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Bruce Kong</p>
+                        <p class="desc">B/S&amp;Java</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tips/">
+                    tips <span class="right">11 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/languages/">
+                    languages <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tools/">
+                    tools <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/bike/">
+                    bike <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/gis/">
+                    gis <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Oracle/">
+                    Oracle <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/languages/">languages</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>基于GIS的团队管理系统的简介</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2015-05-16T02:36:05.000Z"><a href="/posts/4243991381/">2015-05-16</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-font"></i>
+    <span>656</span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-clock-o"></i>
+	<span>2</span>
+</span>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Android/" class="chip pink lighten-1">Android</a>
+        
+            <a href="/tags/GIS/" class="chip pink lighten-1">GIS</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#什么是TeamManager"><span class="section table-of-contents-text">什么是TeamManager</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#系统环境"><span class="section table-of-contents-text">系统环境</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#功能介绍"><span class="section table-of-contents-text">功能介绍</span></a><ol class="section table-of-contents-child"><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#loginview"><span class="section table-of-contents-text">登录界面</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#mapview"><span class="section table-of-contents-text">地图界面</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#teamview"><span class="section table-of-contents-text">团队界面</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#chatview"><span class="section table-of-contents-text">通讯界面</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#meview"><span class="section table-of-contents-text">个人信息</span></a></li><li class="section table-of-contents-item section table-of-contents-level-3"><a class="section table-of-contents-link" href="#totalview"><span class="section table-of-contents-text">整个录屏内容</span></a></li></ol></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>基于地图的移动团队管理系统：</strong></p>
+<p>团队管理已经从传统的文字通讯，变成了基于地图的移动团队管理系统，让队员实时显示在地图上，系统使用期间还实时上传位置到服务器，便于管理者监督、管理、统计和分析。</p>
+<a id="more"></a>
+<h2 id="什么是TeamManager"><a href="#什么是TeamManager" class="headerlink" title="什么是TeamManager"></a>什么是TeamManager</h2><div style="text-align: center;"><img src="https://cdn.brucekong.com/team.png" alt="team"></div>
+
+<p>&emsp;&emsp;基于GIS的团队管理Android应用，本系统以Android为移动端平台，采用B/S架构进行Android客户端与服务器端开发，调用百度地图API进行地图开发，综合利用移动端定位技术和数据库技术、移动客户端与服务器端通信技术、WCF技术等实现了系统的各项功能。该系统主要实现的功能包括在实现传统团队管理的任务分发、日志记录、即时通讯的功能基础上，结合移动GIS技术实现对团队内部所有成员的准确实时追踪定位、轨迹回放、周边查询、紧急救援路线导航，同时团队管理员可以实现对内部成员的实时监控和轨迹回放等操作。</p>
+
+<h2 id="系统环境"><a href="#系统环境" class="headerlink" title="系统环境"></a>系统环境</h2><ul>
+<li>Version : 1.0</li>
+<li>Development platform : Android Studio 1.3</li>
+<li>Gradle Version : 2.5</li>
+<li>Gradle Plugin Version : 1.3.0</li>
+</ul>
+<h2 id="功能介绍"><a href="#功能介绍" class="headerlink" title="功能介绍"></a>功能介绍</h2><h3 id="loginview">登录界面</h3>
+
+<ul>
+<li>包括头像，第一次登录时默认的是系统图标</li>
+<li>密码输入窗口</li>
+<li>忘记密码功能按钮</li>
+<li>注册功能按钮<br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-login.gif" alt="Login"></div>
+
+<h3 id="mapview">地图界面</h3>
+
+<ul>
+<li>显示当前位置信息</li>
+<li>切换显示的地图图层》普通地图 或 遥感图像</li>
+<li>是否记录运动轨迹</li>
+<li>放大和缩小</li>
+<li>查看缩放比例</li>
+<li>查找某地区的某位置<br><br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-map.gif" alt="Map"></div>
+
+<h3 id="teamview">团队界面</h3>
+
+<ul>
+<li>查找想要添加的团队</li>
+<li>创建团队</li>
+<li>管理员查看并管理团队信息，比如设置位置共享，解散团队（创建者）</li>
+<li>创建或查看公告</li>
+<li>创建或查看任务</li>
+<li>查看团队地图，可以查看到团队中启用位置共享的成员位置</li>
+<li>管理团队成员，比如：创建管理员</li>
+<li>团队聊天</li>
+<li>邀请好友加入当前团队</li>
+<li>管理员可以监控团队成员信息<br><br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-team.gif" alt="Team"></div>
+
+<h3 id="chatview">通讯界面</h3>
+
+<ul>
+<li>查找好友，查看或进行聊天</li>
+<li>聊天<br><br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-chat.gif" alt="Chat"></div>
+
+<h3 id="meview">个人信息</h3>
+
+<ul>
+<li>查看或修改个人信息</li>
+<li>签到，签出</li>
+<li>我的任务</li>
+<li>我的日志</li>
+<li>我的日程计划</li>
+<li>我的轨迹</li>
+<li>我的警示点</li>
+<li>我的兴趣点</li>
+<li>我的兴趣点热力图<br><br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-me.gif" alt="Me"></div>
+
+<h3 id="totalview">整个录屏内容</h3>
+
+<ul>
+<li>包含了上面全部的录制过程<br></li>
+</ul>
+<div style="text-align: center;"><img src="https://cdn.brucekong.com/team-all.gif" alt="Total"> </div><br>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a><br><div style="text-align: center;padding: 0; margin: 0;"><br>    <img class="wechat-qrcode"  src="https://cdn.brucekong.com/wechat-blog.png" alt="关注公众号"><br></div>
+
+                
+<p class="pink-link-context">
+    <a href="/posts/3219987363/" rel="next" title="Git安装与配置">
+    上一篇：Git安装与配置
+  </a>
+</p>
+
+
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjEyNC84Njg4" style="color: #D60036;text-align: center">
+        <script type="text/javascript">
+            (function(d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse orange darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/ibrucekong" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="https://raytaylorlin.github.io/" target="_blank">raytaylorism</a>
+                
+                    <a class="social-link" href="https://ibrucekong.github.io/" target="_blank">ibrucekong</a>
+                
+                    <a class="social-link" href="https://is.boxmoe.cn" target="_blank">Infinite&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://bertliu.com/" target="_blank">Bert Liu&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://home.cnblogs.com/u/onsummer/" target="_blank">秋意正寒</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2018 brucekong.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">| 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+            <p class="right" style="margin-top: 0;padding-right: 5px"><span class="post-count">全站共</span>39.8k字</p>
+        </div>
+    </div>
+    <div hidden>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272856823'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1272856823%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function(e) {
+
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode').not('.wechat-qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            //$(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+                $(".container.main-container").css("margin-top", "0px");
+            }else {
+                $(".container.main-container").css("margin-top", "30px");
+            }
+
+          window.onload = function () {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让dom加载好之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                // 反之
+                $("#live2dcanvas").show();
+              }
+            }
+
+            // 监听窗口变化
+            $(window).resize(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让窗口变化之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                $("#live2dcanvas").show();
+              }
+            });
+
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },200);
+            });
+
+            $('.btn-floating.waves-effect.button-collapse.orange.darken-1').click(function () {
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },100);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                        $("#main-menu").css("transform", "translateX(-100%)");
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+
+            // 添加Ctrl+F全局快捷键调出搜索框
+            document.onkeydown = function(e) {
+                    var keyCode = e.keyCode || e.which || e.charCode;
+                    var ctrlKey = e.ctrlKey || e.metaKey;
+                    if(ctrlKey && keyCode == 70) {
+                        $('.menu-search.modal-trigger ').click();
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (keyCode) return true;
+            }
+
+            $("#side-user").click(function () {
+                location.href = '/about/';
+            })
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+
+        // 添加百度推送
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d6bd33016c98e674bcda9edcd27f708c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>

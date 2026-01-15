@@ -1,0 +1,748 @@
+<!DOCTYPE HTML>
+<html lang="zh">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    
+    <!--bing.com检索-->
+    <meta name="msvalidate.01" content="44FE199290668C7D4BE5EBFA832F518E" />
+    <!-- google.com检索-->
+    <meta name="google-site-verification" content="V8kst8YNVdlYwh67daH_HUjMsgAOYe0xhj2_rxUm8Zo" />
+
+    <title>使用BeautifulSoup和pdfkit爬取菜鸟教程到pdf文件! | Bruce Kong</title>
+    <meta name="keywords" content="布鲁斯,布鲁斯孔,布鲁斯·孔,孔·布鲁斯,孔布鲁斯,Bruce Kong,brucekong.com,blog.brucekong.com,www.brucekong.com,Bruce,bruce,GIS,地理信息" />
+    <meta name="description" content="布鲁斯是一个毕业于地理信息专业的骚年，专注于发现与分享当前较为前沿的Web技术和地理信息技术，依托博客平台，广泛交友、交流技术，提高自己，也不断分享新的技术。" />
+    <meta name="author" content="Bruce">
+    
+    <meta name="description" content="锋利的BeautifulSoup：
+BeautifulSoup是Python爬虫里面使用较为广泛的库，其主要功能是从网页中抓取数据，可以使用较少的代码实现完整的数据爬取工作。">
+    
+    
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <meta property="og:title" content="使用BeautifulSoup和pdfkit爬取菜鸟教程到pdf文件!"/>
+    <meta property="og:site_name" content="Bruce Kong"/>
+
+    
+    <meta property="og:image" content="undefined"/>
+    
+
+    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="alternate" href="/atom.xml" title="Bruce Kong" type="application/atom+xml">
+    <link rel="stylesheet" href="/css/lib/materialize.min.css">
+    <link rel="stylesheet" href="/css/lib/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+
+    
+        <link rel="stylesheet" href="/css/lib/prettify-tomorrow-night-eighties.css" type="text/css">
+    
+    <!--[if lt IE 9]><script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script><![endif]-->
+<meta name="generator" content="Hexo 4.2.1"></head>
+
+
+<body>
+    <img src="/weixin_favicon.png" style="position: absolute; left: -9999px; opacity: 0; filter: alpha(opacity=0);">
+
+    <nav class="indigo">
+    <div class="nav-wrapper">
+        <a href="#" data-activates="main-menu" class="button-collapse">
+            <i class="fa fa-navicon"></i>
+        </a>
+        <div class="">
+            <a href="/" class="brand-logo hide-on-med-and-down">Bruce Kong</a>
+            <ul class="right hide-on-med-and-down">
+                
+                    <li>
+                        <a class="menu-home " href="/" >
+                            <i class="fa fa-home "></i>
+                            
+                            首页
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-archive " href="/archives" >
+                            <i class="fa fa-archive "></i>
+                            
+                            归档
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-reading " href="/reading" >
+                            <i class="fa fa-book "></i>
+                            
+                            读书
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-about " href="/about" >
+                            <i class="fa fa-user "></i>
+                            
+                            关于
+                        </a>
+                    </li>
+                
+                    <li>
+                        <a class="menu-search modal-trigger " href="#search" >
+                            <i class="fa fa-search "></i>
+                            
+                            搜索
+                        </a>
+                    </li>
+                
+            </ul>
+            <div>
+    <ul class="side-nav indigo darken-1" id="main-menu">
+        
+        <li class="side-user" id="side-user" style="cursor: pointer;">
+            <div class="row">
+                <div class="col s4 no-padding">
+                    <img class="avatar-image circle responsive-img" src="/css/images/avatar.png" alt="User Avatar">
+                </div>
+                <div class="info col s8 valign-wrapper no-padding">
+                    <div class="valign">
+                        <p class="name">Bruce Kong</p>
+                        <p class="desc">B/S&amp;Java</p>
+                    </div>
+                </div>
+            </div>
+        </li>
+        
+
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-home " href="/" >
+                    <i class="fa fa-home "></i>
+                    
+                    首页
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-archive " href="/archives" >
+                    <i class="fa fa-archive "></i>
+                    
+                    归档
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-reading " href="/reading" >
+                    <i class="fa fa-book "></i>
+                    
+                    读书
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-about " href="/about" >
+                    <i class="fa fa-user "></i>
+                    
+                    关于
+                </a>
+            </li>
+        
+            <li class="no-padding">
+                <a class="waves-effect menu-search modal-trigger " href="#search" >
+                    <i class="fa fa-search "></i>
+                    
+                    搜索
+                </a>
+            </li>
+        
+    </ul>
+
+    <ul class="side-nav indigo darken-1" id="category-menu">
+    
+
+            
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tips/">
+                    tips <span class="right">11 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/languages/">
+                    languages <span class="right">22 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/tools/">
+                    tools <span class="right">3 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/bike/">
+                    bike <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/gis/">
+                    gis <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+            <li class="collapse-level-0" collapse-level="0">
+                <a class="no-padding" href="/categories/Oracle/">
+                    Oracle <span class="right">1 篇</span></a>
+                </a>
+            </li>
+
+        
+
+    </ul>
+</div>
+
+        </div>
+    </div>
+</nav>
+
+<div id="search" class="modal search-modal">
+    <div class="row">
+        <div class="input-field col s12">
+              <input id="search-input" type="text">
+              <label for="search-input">搜索</label>
+        </div>
+
+    </div>
+    <div id="search-result" class="search-result col s12">
+
+    </div>
+</div>
+
+
+    <main>
+        <div class="container main-container">
+    <nav class="page-nav hide-on-small-only">
+    <div class="nav-wrapper indigo">
+        <span class="breadcrumb">当前位置（分类目录）</span>
+        
+            
+    
+    
+    <a class="breadcrumb" href="/categories/languages/">languages</a>
+
+
+        
+
+        
+    </div>
+</nav>
+
+<article>
+    <div class="card">
+        <div class="card-content">
+            
+
+            <div class="article-title">
+                
+    
+        <h1>使用BeautifulSoup和pdfkit爬取菜鸟教程到pdf文件!</h1>
+    
+
+
+            </div>
+            <time class="pink-link-context" datetime="2017-11-06T05:13:34.000Z"><a href="/posts/1297890910/">2017-11-06</a></time>
+
+            <span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-eye"></i>
+    <span id="busuanzi_value_page_pv"></span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-font"></i>
+    <span>2,119</span>
+</span>
+<span id="busuanzi_container_page_pv" class="read-times-container">
+    <i class="fa fa-clock-o"></i>
+	<span>11</span>
+</span>
+            
+    <div class="tags-row">
+        
+            <a href="/tags/Python3/" class="chip pink lighten-1">Python3</a>
+        
+            <a href="/tags/BeautifulSoup/" class="chip pink lighten-1">BeautifulSoup</a>
+        
+            <a href="/tags/Pdfkit/" class="chip pink lighten-1">Pdfkit</a>
+        
+            <a href="/tags/爬虫/" class="chip pink lighten-1">爬虫</a>
+        
+    </div>
+
+
+            <div class="toc pink-link-context hide-on-med-and-down">
+    <ol class="section table-of-contents"><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#BeautifulSoup简介"><span class="section table-of-contents-text">BeautifulSoup简介</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#pdfkit简介"><span class="section table-of-contents-text">pdfkit简介</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#爬取的关键代码"><span class="section table-of-contents-text">爬取的关键代码</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#完整代码"><span class="section table-of-contents-text">完整代码</span></a></li><li class="section table-of-contents-item section table-of-contents-level-2"><a class="section table-of-contents-link" href="#存在的问题"><span class="section table-of-contents-text">存在的问题</span></a></li></ol>
+</div>
+
+
+            <div class="entry pink-link-context">
+                <p><strong>锋利的BeautifulSoup：</strong></p>
+<p>BeautifulSoup是Python爬虫里面使用较为广泛的库，其主要功能是从网页中抓取数据，可以使用较少的代码实现完整的数据爬取工作。</p>
+<a id="more"></a>
+<h2 id="BeautifulSoup简介"><a href="#BeautifulSoup简介" class="headerlink" title="BeautifulSoup简介"></a>BeautifulSoup简介</h2><p>&emsp;&emsp;BeautifulSoup提供一些简单的、python式的函数用来处理导航、搜索、修改分析树等功能。它是一个工具箱，通过解析文档为用户提供需要抓取的数据，因为简单，所以不需要多少代码就可以写出一个完整的应用程序。</p>
+<h2 id="pdfkit简介"><a href="#pdfkit简介" class="headerlink" title="pdfkit简介"></a>pdfkit简介</h2><p>&emsp;&emsp;pdfkit是一个把HTML+CSS格式的文件转换成PDF格式文档的一种工具。它是对html转pdf工具包wkhtmltopdf的封装，所以必须要安装wkhtmltopdf，并将wkhtmltopdf的安装路径配置到系统环境PATH中。</p>
+<blockquote>
+<p>可以参考：<a href="http://blog.csdn.net/appleyuchi/article/details/70947138" target="_blank" rel="noopener">pdfkit与wkhtmltopdf的安装与使用</a></p>
+</blockquote>
+<h2 id="爬取的关键代码"><a href="#爬取的关键代码" class="headerlink" title="爬取的关键代码"></a>爬取的关键代码</h2><p>&emsp;&emsp;列举了一些共有变量和设置的变量<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"># 比如爬取python3，网址：http:&#x2F;&#x2F;www.runoob.com&#x2F;python3&#x2F;python3-tutorial.html</span><br><span class="line"># 对该url进行拆分，对以下四个参数进行配置，一般只修改language</span><br><span class="line">language &#x3D; &#39;python3&#39;</span><br><span class="line">list_tag &#x3D; &#39;_top&#39;</span><br><span class="line">content_tag &#x3D; &#39;content&#39;</span><br><span class="line">path_wkthmltopdf &#x3D; r&#39;C:\Program Files\wkhtmltopdf\bin\wkhtmltopdf.exe&#39;</span><br><span class="line"># 以下参数不用配置</span><br><span class="line">child_url &#x3D; &#39;&#x2F;&#39; + language</span><br><span class="line">url_tag &#x3D; child_url + &#39;&#x2F;&#39;</span><br><span class="line">output_name &#x3D; u&quot;runoob_&quot; + language + r&quot;教程.pdf&quot;</span><br></pre></td></tr></table></figure></p>
+<p>&emsp;&emsp;get_url_title_list方法：获取python的章节url<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">def get_url_title_list():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    获取所有URL和Title目录列表</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    root &#x3D; root_url</span><br><span class="line">    temp_child_url &#x3D; child_url</span><br><span class="line">    resp &#x3D; requests.get(root + temp_child_url)</span><br><span class="line">    resp.encoding &#x3D; &#39;utf-8&#39;</span><br><span class="line">    soup &#x3D; BeautifulSoup(resp.text, &quot;html.parser&quot;)</span><br><span class="line">    x &#x3D; soup.find(&quot;div&quot;, class_&#x3D;&quot;design&quot;)</span><br><span class="line">    x &#x3D; x.find_all(&quot;a&quot;, target&#x3D;list_tag)</span><br><span class="line">    title &#x3D; []</span><br><span class="line">    url_path &#x3D; []</span><br><span class="line">    for i in x:</span><br><span class="line">        value &#x3D; i.string.strip()</span><br><span class="line">        title.append(value)</span><br><span class="line">        temp_href &#x3D; i.get(&#39;href&#39;).strip()</span><br><span class="line">        if temp_href.find(url_tag) &gt;&#x3D; 0:</span><br><span class="line">            href &#x3D; root + temp_href</span><br><span class="line">        else:</span><br><span class="line">            href &#x3D; root + temp_child_url + &#39;&#x2F;&#39; + temp_href</span><br><span class="line">        url_path.append(href)</span><br><span class="line">    return title, url_path</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;parse_url_to_html方法：将爬取的目标网页存储为html文件</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">def parse_url_to_html(url, name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    解析URL，返回HTML内容</span><br><span class="line">    :param url:解析的url</span><br><span class="line">    :param name: 保存的html文件名</span><br><span class="line">    :return: html</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    try:</span><br><span class="line">        response &#x3D; requests.get(url)</span><br><span class="line">        soup &#x3D; BeautifulSoup(response.content, &#39;html.parser&#39;)</span><br><span class="line">        # 正文</span><br><span class="line">        body &#x3D; soup.find(id&#x3D;content_tag)</span><br><span class="line">        # 标题</span><br><span class="line">        title &#x3D; body.find(&#39;h1&#39;)</span><br><span class="line">        if title is None:</span><br><span class="line">            title &#x3D; body.find_all(&#39;h2&#39;)[0]</span><br><span class="line">            title_tag &#x3D; soup.new_tag(&#39;h1&#39;)</span><br><span class="line">            title_tag.string &#x3D; title.string</span><br><span class="line">            title &#x3D; title_tag</span><br><span class="line">        # 标题加入到正文的最前面，居中显示</span><br><span class="line">        center_tag &#x3D; soup.new_tag(&quot;center&quot;)</span><br><span class="line">        center_tag.insert(1, title)</span><br><span class="line">        body.insert(1, center_tag)</span><br><span class="line">        html &#x3D; str(body)</span><br><span class="line">        # body中的img标签的src相对路径的改成绝对路径</span><br><span class="line">        pattern &#x3D; &quot;(&lt;img .*?src&#x3D;\&quot;)(.*?)(\&quot;)&quot;</span><br><span class="line">        def func(m):</span><br><span class="line">            if not m.group(3).startswith(&quot;http&quot;):</span><br><span class="line">                if m.group(2).find(&#39;https&#39;) &gt;&#x3D; 0:</span><br><span class="line">                    return m.group(1) + m.group(2) + m.group(3)</span><br><span class="line">                if m.group(2).find(&#39;runoob.com&#39;) &gt;&#x3D; 0:</span><br><span class="line">                    rtn &#x3D; m.group(1) + &quot;http:&quot; + m.group(2) + m.group(3)</span><br><span class="line">                    print(rtn)</span><br><span class="line">                else:</span><br><span class="line">                    rtn &#x3D; m.group(1) + root_url + m.group(2) + m.group(3)</span><br><span class="line">                    print(rtn)</span><br><span class="line">                return rtn</span><br><span class="line">            else:</span><br><span class="line">                return m.group(1) + m.group(2) + m.group(3)</span><br><span class="line">        html &#x3D; re.compile(pattern).sub(func, html)</span><br><span class="line">        html &#x3D; html_template.format(content&#x3D;html)</span><br><span class="line">        html &#x3D; html.encode(&quot;utf-8&quot;)</span><br><span class="line">        with open(name, &#39;wb&#39;) as f:</span><br><span class="line">            f.write(html)</span><br><span class="line">        return name</span><br><span class="line">    except Exception as e:</span><br><span class="line">        logging.error(&quot;解析错误&quot;, exc_info&#x3D;True)</span><br></pre></td></tr></table></figure>
+<div align=center> <img src="https://cdn.brucekong.com/gen-html.png" alt="parse_url_to_html"> </div>
+
+<p>&emsp;&emsp;save_pdf方法：将html文件转为pdf文件<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line">def save_pdf(htmls, file_name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    把所有html文件保存到pdf文件</span><br><span class="line">    :param htmls:  html文件列表</span><br><span class="line">    :param file_name: pdf文件名</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    config &#x3D; pdfkit.configuration(wkhtmltopdf&#x3D;path_wkthmltopdf)</span><br><span class="line">    options &#x3D; &#123;</span><br><span class="line">        &#39;page-size&#39;: &#39;Letter&#39;,</span><br><span class="line">        &#39;margin-top&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-right&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-bottom&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-left&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;encoding&#39;: &quot;UTF-8&quot;,</span><br><span class="line">        &#39;custom-header&#39;: [</span><br><span class="line">            (&#39;Accept-Encoding&#39;, &#39;gzip&#39;)</span><br><span class="line">        ],</span><br><span class="line">        &#39;cookie&#39;: [</span><br><span class="line">            (&#39;cookie-name1&#39;, &#39;cookie-value1&#39;),</span><br><span class="line">            (&#39;cookie-name2&#39;, &#39;cookie-value2&#39;),</span><br><span class="line">        ],</span><br><span class="line">        &#39;outline-depth&#39;: 10,</span><br><span class="line">    &#125;</span><br><span class="line">    pdfkit.from_file(htmls, file_name, options&#x3D;options, configuration&#x3D;config)</span><br></pre></td></tr></table></figure></p>
+<div align=center><img src="https://cdn.brucekong.com/gen-pdf.png" alt="save_pdf"></div>
+
+<p>&emsp;&emsp;append_pdf方法：拼接pdf<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">def append_pdf(input1, output1, bookmark):</span><br><span class="line">    bookmark_num &#x3D; output1.getNumPages()</span><br><span class="line">    print(bookmark_num)</span><br><span class="line">    for page_num in range(input1.numPages):</span><br><span class="line">        output1.addPage(input1.getPage(page_num))</span><br><span class="line"></span><br><span class="line">    output1.addBookmark(bookmark, bookmark_num)</span><br></pre></td></tr></table></figure><br>&emsp;&emsp;在上述方法执行完成后，执行以下代码，将拼接的pdf输出到本地<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">output.write(open(output_name, &quot;wb&quot;))</span><br></pre></td></tr></table></figure></p>
+<div align=center><img src="https://cdn.brucekong.com/gen-total-pdf.png" alt="append_pdf"></div>
+
+<h2 id="完整代码"><a href="#完整代码" class="headerlink" title="完整代码"></a>完整代码</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br><span class="line">133</span><br><span class="line">134</span><br><span class="line">135</span><br><span class="line">136</span><br><span class="line">137</span><br><span class="line">138</span><br><span class="line">139</span><br><span class="line">140</span><br><span class="line">141</span><br><span class="line">142</span><br><span class="line">143</span><br><span class="line">144</span><br><span class="line">145</span><br><span class="line">146</span><br><span class="line">147</span><br><span class="line">148</span><br><span class="line">149</span><br><span class="line">150</span><br><span class="line">151</span><br><span class="line">152</span><br><span class="line">153</span><br><span class="line">154</span><br><span class="line">155</span><br><span class="line">156</span><br><span class="line">157</span><br><span class="line">158</span><br><span class="line">159</span><br><span class="line">160</span><br><span class="line">161</span><br><span class="line">162</span><br><span class="line">163</span><br><span class="line">164</span><br><span class="line">165</span><br><span class="line">166</span><br><span class="line">167</span><br><span class="line">168</span><br><span class="line">169</span><br><span class="line">170</span><br><span class="line">171</span><br><span class="line">172</span><br><span class="line">173</span><br><span class="line">174</span><br><span class="line">175</span><br><span class="line">176</span><br><span class="line">177</span><br><span class="line">178</span><br><span class="line">179</span><br><span class="line">180</span><br><span class="line">181</span><br><span class="line">182</span><br><span class="line">183</span><br></pre></td><td class="code"><pre><span class="line"># -*-coding:utf-8-*-</span><br><span class="line">import os</span><br><span class="line">import re</span><br><span class="line">import time</span><br><span class="line">import sys</span><br><span class="line">import logging</span><br><span class="line">import pdfkit</span><br><span class="line">import requests</span><br><span class="line">from bs4 import BeautifulSoup</span><br><span class="line">from PyPDF2 import PdfFileWriter, PdfFileReader</span><br><span class="line">html_template &#x3D; &quot;&quot;&quot; </span><br><span class="line">&lt;!DOCTYPE html&gt; </span><br><span class="line">&lt;html lang&#x3D;&quot;en&quot;&gt; </span><br><span class="line">&lt;head&gt; </span><br><span class="line">    &lt;meta charset&#x3D;&quot;UTF-8&quot;&gt; </span><br><span class="line">&lt;&#x2F;head&gt; </span><br><span class="line">&lt;body&gt; </span><br><span class="line">&#123;content&#125; </span><br><span class="line">&lt;&#x2F;body&gt; </span><br><span class="line">&lt;&#x2F;html&gt; </span><br><span class="line">&quot;&quot;&quot;</span><br><span class="line">root_url &#x3D; &quot;http:&#x2F;&#x2F;www.runoob.com&quot;</span><br><span class="line"># 针对Runoob.com的爬虫示例</span><br><span class="line"># 列入要对该网站的python3进行爬虫,点开 python3，网址默认为：http:&#x2F;&#x2F;www.runoob.com&#x2F;python3&#x2F;python3-tutorial.html</span><br><span class="line"># 对该url进行拆分，对以下四个参数进行配置，一般只修改language</span><br><span class="line">language &#x3D; &#39;python3&#39;                                                      # 要爬虫的分类------针对不同的内容进行修改</span><br><span class="line">list_tag &#x3D; &#39;_top&#39;                                                         # 对左侧列表的class检索------一般不需要修改</span><br><span class="line">content_tag &#x3D; &#39;content&#39;                                                   # 对正文的id检索------一般不需要修改</span><br><span class="line">path_wkthmltopdf &#x3D; r&#39;C:\\Program Files\\wkhtmltopdf\\bin\\wkhtmltopdf.exe&#39;    # 本地 wkhtmltopdf 的配置------根据自己电脑情况配置</span><br><span class="line"># 以下参数不用配置</span><br><span class="line">child_url &#x3D; &#39;&#x2F;&#39; + language                                                # 定义子url</span><br><span class="line">url_tag &#x3D; child_url + &#39;&#x2F;&#39;                                                 # url_tag是对左侧列表中的url出现特殊情况下的判断</span><br><span class="line">output_name &#x3D; u&quot;runoob_&quot; + language + r&quot;教程.pdf&quot;                          # 爬虫的文件名</span><br><span class="line">def parse_url_to_html(url, name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    解析URL，返回HTML内容</span><br><span class="line">    :param url:解析的url</span><br><span class="line">    :param name: 保存的html文件名</span><br><span class="line">    :return: html</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    try:</span><br><span class="line">        response &#x3D; requests.get(url)</span><br><span class="line">        soup &#x3D; BeautifulSoup(response.content, &#39;html.parser&#39;)</span><br><span class="line">        # 正文</span><br><span class="line">        body &#x3D; soup.find(id&#x3D;content_tag)</span><br><span class="line">        # 标题</span><br><span class="line">        title &#x3D; body.find(&#39;h1&#39;)</span><br><span class="line">        if title is None:</span><br><span class="line">            title &#x3D; body.find_all(&#39;h2&#39;)[0]</span><br><span class="line">            title_tag &#x3D; soup.new_tag(&#39;h1&#39;)</span><br><span class="line">            title_tag.string &#x3D; title.string</span><br><span class="line">            title &#x3D; title_tag</span><br><span class="line">        # 标题加入到正文的最前面，居中显示</span><br><span class="line">        center_tag &#x3D; soup.new_tag(&quot;center&quot;)</span><br><span class="line">        center_tag.insert(1, title)</span><br><span class="line">        body.insert(1, center_tag)</span><br><span class="line">        html &#x3D; str(body)</span><br><span class="line">        # body中的img标签的src相对路径的改成绝对路径</span><br><span class="line">        pattern &#x3D; &quot;(&lt;img .*?src&#x3D;\&quot;)(.*?)(\&quot;)&quot;</span><br><span class="line">        def func(m):</span><br><span class="line">            if not m.group(3).startswith(&quot;http&quot;):</span><br><span class="line">                if m.group(2).find(&#39;https&#39;) &gt;&#x3D; 0:</span><br><span class="line">                    return m.group(1) + m.group(2) + m.group(3)</span><br><span class="line">                if m.group(2).find(&#39;runoob.com&#39;) &gt;&#x3D; 0:</span><br><span class="line">                    rtn &#x3D; m.group(1) + &quot;http:&quot; + m.group(2) + m.group(3)</span><br><span class="line">                    print(rtn)</span><br><span class="line">                else:</span><br><span class="line">                    rtn &#x3D; m.group(1) + root_url + m.group(2) + m.group(3)</span><br><span class="line">                    print(rtn)</span><br><span class="line">                return rtn</span><br><span class="line">            else:</span><br><span class="line">                return m.group(1) + m.group(2) + m.group(3)</span><br><span class="line">        html &#x3D; re.compile(pattern).sub(func, html)</span><br><span class="line">        html &#x3D; html_template.format(content&#x3D;html)</span><br><span class="line">        html &#x3D; html.encode(&quot;utf-8&quot;)</span><br><span class="line">        with open(name, &#39;wb&#39;) as f:</span><br><span class="line">            f.write(html)</span><br><span class="line">        return name</span><br><span class="line">    except Exception as e:</span><br><span class="line">        logging.error(&quot;解析错误&quot;, exc_info&#x3D;True)</span><br><span class="line"># 要去除所有的div标签</span><br><span class="line"># 移除div（如果要移除a标签，把div换成a即可）</span><br><span class="line"># remove_tag(html, &quot;div&quot;)</span><br><span class="line">def remove_tag(text, tag):</span><br><span class="line">    return text[:text.find(&quot;&lt;&quot; + tag + &quot;&gt;&quot;)] + text[text.find(&quot;&lt;&#x2F;&quot; + tag + &quot;&gt;&quot;) + len(tag) + 3:]</span><br><span class="line">def get_url_title_list():</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    获取所有URL和Title目录列表</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    root &#x3D; root_url</span><br><span class="line">    temp_child_url &#x3D; child_url</span><br><span class="line">    resp &#x3D; requests.get(root + temp_child_url)</span><br><span class="line">    resp.encoding &#x3D; &#39;utf-8&#39;</span><br><span class="line">    soup &#x3D; BeautifulSoup(resp.text, &quot;html.parser&quot;)</span><br><span class="line">    x &#x3D; soup.find(&quot;div&quot;, class_&#x3D;&quot;design&quot;)</span><br><span class="line">    x &#x3D; x.find_all(&quot;a&quot;, target&#x3D;list_tag)</span><br><span class="line">    title &#x3D; []</span><br><span class="line">    url_path &#x3D; []</span><br><span class="line">    for i in x:</span><br><span class="line">        value &#x3D; i.string.strip()</span><br><span class="line">        title.append(value)</span><br><span class="line">        temp_href &#x3D; i.get(&#39;href&#39;).strip()</span><br><span class="line">        if temp_href.find(url_tag) &gt;&#x3D; 0:</span><br><span class="line">            href &#x3D; root + temp_href</span><br><span class="line">        else:</span><br><span class="line">            href &#x3D; root + temp_child_url + &#39;&#x2F;&#39; + temp_href</span><br><span class="line">        url_path.append(href)</span><br><span class="line">    return title, url_path</span><br><span class="line">def save_pdf(htmls, file_name):</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    把所有html文件保存到pdf文件</span><br><span class="line">    :param htmls:  html文件列表</span><br><span class="line">    :param file_name: pdf文件名</span><br><span class="line">    :return:</span><br><span class="line">    &quot;&quot;&quot;</span><br><span class="line">    config &#x3D; pdfkit.configuration(wkhtmltopdf&#x3D;path_wkthmltopdf)</span><br><span class="line">    options &#x3D; &#123;</span><br><span class="line">        &#39;page-size&#39;: &#39;Letter&#39;,</span><br><span class="line">        &#39;margin-top&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-right&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-bottom&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;margin-left&#39;: &#39;0.75in&#39;,</span><br><span class="line">        &#39;encoding&#39;: &quot;UTF-8&quot;,</span><br><span class="line">        &#39;custom-header&#39;: [</span><br><span class="line">            (&#39;Accept-Encoding&#39;, &#39;gzip&#39;)</span><br><span class="line">        ],</span><br><span class="line">        &#39;cookie&#39;: [</span><br><span class="line">            (&#39;cookie-name1&#39;, &#39;cookie-value1&#39;),</span><br><span class="line">            (&#39;cookie-name2&#39;, &#39;cookie-value2&#39;),</span><br><span class="line">        ],</span><br><span class="line">        &#39;outline-depth&#39;: 10,</span><br><span class="line">    &#125;</span><br><span class="line">    pdfkit.from_file(htmls, file_name, options&#x3D;options, configuration&#x3D;config)</span><br><span class="line">def append_pdf(input1, output1, bookmark):</span><br><span class="line">    bookmark_num &#x3D; output1.getNumPages()</span><br><span class="line">    print(bookmark_num)</span><br><span class="line">    for page_num in range(input1.numPages):</span><br><span class="line">        output1.addPage(input1.getPage(page_num))</span><br><span class="line">    output1.addBookmark(bookmark, bookmark_num)</span><br><span class="line">def main():</span><br><span class="line">    output &#x3D; PdfFileWriter()</span><br><span class="line">    start &#x3D; time.time()</span><br><span class="line">    file_name &#x3D; u&quot;temp_&quot;</span><br><span class="line">    result &#x3D; get_url_title_list()</span><br><span class="line">    titles &#x3D; result[0]</span><br><span class="line">    urls &#x3D; result[1]</span><br><span class="line">    print(titles)</span><br><span class="line">    print(urls)</span><br><span class="line">    for index, url in enumerate(urls):</span><br><span class="line">        parse_url_to_html(url, str(index) + &quot;.html&quot;)</span><br><span class="line">    htmls &#x3D; []</span><br><span class="line">    pdfs &#x3D; []</span><br><span class="line">    for i in range(0, len(urls)):</span><br><span class="line">        htmls.append(str(i) + &#39;.html&#39;)</span><br><span class="line">        pdfs.append(file_name + str(i) + &#39;.pdf&#39;)</span><br><span class="line">        save_pdf(str(i) + &#39;.html&#39;, file_name + str(i) + &#39;.pdf&#39;)</span><br><span class="line">        print(u&quot;转换完成第&quot; + str(i) + &#39;个html&#39;)</span><br><span class="line">    i &#x3D; 0</span><br><span class="line">    for pdf in pdfs:</span><br><span class="line">        fd &#x3D; open(pdf, &#39;rb&#39;)</span><br><span class="line">        append_pdf(PdfFileReader(fd), output, titles[i])</span><br><span class="line">        i &#x3D; i + 1</span><br><span class="line">        print(u&quot;合并完成第&quot; + str(i) + &#39;个pdf&#39; + pdf)</span><br><span class="line">    output.write(open(output_name, &quot;wb&quot;))</span><br><span class="line">    print(u&quot;输出PDF成功！&quot;)</span><br><span class="line">    for html in htmls:</span><br><span class="line">        os.remove(html)</span><br><span class="line">        print(u&quot;删除临时文件&quot; + html)</span><br><span class="line">    for pdf in pdfs:</span><br><span class="line">        os.remove(pdf)</span><br><span class="line">        print(u&quot;删除临时文件&quot; + pdf)</span><br><span class="line">    total_time &#x3D; time.time() - start</span><br><span class="line">    print(u&quot;总共耗时：%f 秒&quot; % total_time)</span><br><span class="line">if __name__ &#x3D;&#x3D; &#39;__main__&#39;:</span><br><span class="line">    try:</span><br><span class="line">        main()</span><br><span class="line">    except OSError as err:</span><br><span class="line">        print(&quot;OS error: &#123;0&#125;&quot;.format(err))</span><br><span class="line">    except ValueError:</span><br><span class="line">        print(&quot;Could not convert data to an integer.&quot;)</span><br><span class="line">    finally:</span><br><span class="line">        print(&quot;Unexpected error:&quot;, sys.exc_info()[0])</span><br></pre></td></tr></table></figure>
+<h2 id="存在的问题"><a href="#存在的问题" class="headerlink" title="存在的问题"></a>存在的问题</h2><p>&emsp;&emsp;在删除中间生成的pdf时，报了一个错误(<code>OS error: [WinError 32]另一个程序正在使用此文件，进程无法访问。:&#39;temp_0.pdf&#39;</code>)，提示文件正在使用中，删除pdf文件失败。由于正在学习python，在多次尝试解决该问题，都以失败告终，等技能提升之后再进行修复~<br>如果有不明白的，欢迎留言或者给我 <a href=mailto:kongbin0325@hotmail.com>发邮件[Send Email]</a></p>
+<div style="text-align: center;padding: 0; margin: 0;"><br>    <img class="wechat-qrcode"  src="https://cdn.brucekong.com/wechat-blog.png" alt="关注公众号"><br></div>
+
+                
+<p class="pink-link-context">
+    <a href="/posts/3667539278/" rel="next" title="从零开始搭建自己的博客天地(上)">
+    上一篇：从零开始搭建自己的博客天地(上)
+  </a>
+</p>
+
+
+
+<p class="pink-link-context">
+    <a href="/posts/1533523788/" rel="next" title="Python3入门学习—02条件循环语句">
+    下一篇：Python3入门学习—02条件循环语句
+  </a>
+</p>
+
+
+            </div>
+			
+        </div>
+    </div>
+</article>
+
+
+
+
+    <!-- 来必力City版安装代码 -->
+    <div id="lv-container" data-id="city" data-uid="MTAyMC8zMjEyNC84Njg4" style="color: #D60036;text-align: center">
+        <script type="text/javascript">
+            (function(d, s) {
+                var j, e = d.getElementsByTagName(s)[0];
+
+                if (typeof LivereTower === 'function') { return; }
+
+                j = d.createElement(s);
+                j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+                j.async = true;
+
+                e.parentNode.insertBefore(j, e);
+            })(document, 'script');
+        </script>
+        <noscript> 为正常使用来必力评论功能请激活JavaScript</noscript>
+    </div>
+    <!-- City版安装代码已完成 -->
+
+
+
+</div>
+
+        <div class="fixed-action-btn float-sitemap">
+    <a class="btn-floating btn-large pink">
+      <i class="fa fa-caret-square-o-up"></i>
+    </a>
+    <ul>
+      <li><a class="btn-return-top btn-floating waves-effect green" title="回到顶部"><i class="fa fa-arrow-circle-o-up"></i></a></li>
+      <li><a class="btn-floating waves-effect button-collapse orange darken-1"  data-activates="main-menu" title="菜单"><i class="fa fa-navicon"></i></a></li>
+    </ul>
+  </div>
+
+    </main>
+    <footer class="page-footer indigo darken-1">
+    
+    <div class="footer-container container">
+        <div class="row">
+            
+            <div class="social-group col m4 s12">
+                <h5 class="white-text">社交</h5>
+                
+                    <a class="social-link" href="https://github.com/ibrucekong" target="_blank">
+                        <i class="fa fa-2x fa-github"></i>
+                    </a>
+                
+                    <a class="social-link" href="/atom.xml" target="_blank">
+                        <i class="fa fa-2x fa-rss"></i>
+                    </a>
+                
+                
+    <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js">
+    </script>
+    <div class="site-visitors-container white-text">
+        <span>
+            <i class="fa fa-user"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+        </span>
+        <span>&nbsp;|&nbsp;</span>
+        <span>
+            <i class="fa fa-eye"></i>
+            <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+        </span>
+    </div>
+
+
+            </div>
+            
+
+            
+            <div class="col m8 s12">
+                <h5 class="white-text">友情链接</h5>
+                
+                    <a class="social-link" href="https://raytaylorlin.github.io/" target="_blank">raytaylorism</a>
+                
+                    <a class="social-link" href="https://ibrucekong.github.io/" target="_blank">ibrucekong</a>
+                
+                    <a class="social-link" href="https://is.boxmoe.cn" target="_blank">Infinite&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://bertliu.com/" target="_blank">Bert Liu&#39;s Blog</a>
+                
+                    <a class="social-link" href="https://home.cnblogs.com/u/onsummer/" target="_blank">秋意正寒</a>
+                
+            </div>
+            
+        </div>
+    </div>
+    
+
+    <div class="footer-copyright pink-link-context">
+        <div class="container">
+            © 2018 brucekong.com, All rights reserved.
+            <p class="right" style="margin-top: 0;">| 主题 <a href="https://github.com/raytaylorlin/hexo-theme-raytaylorism" target="_blank" rel="noopener">raytaylorism</a></p>
+            <p class="right" style="margin-top: 0;padding-right: 5px"><span class="post-count">全站共</span>39.8k字</p>
+        </div>
+    </div>
+    <div hidden>
+        <script type="text/javascript">var cnzz_protocol = (("https:" == document.location.protocol) ? " https://" : " http://");document.write(unescape("%3Cspan id='cnzz_stat_icon_1272856823'%3E%3C/span%3E%3Cscript src='" + cnzz_protocol + "s19.cnzz.com/z_stat.php%3Fid%3D1272856823%26show%3Dpic' type='text/javascript'%3E%3C/script%3E"));</script>
+    </div>
+</footer>
+
+    <noscript>
+    <div class="noscript">
+        <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+    </div>
+</noscript>
+<div class="noscript">
+    <p class="center-align">当前网速较慢或者你使用的浏览器不支持博客特定功能，请尝试刷新或换用Chrome、Firefox等现代浏览器</p>
+</div>
+
+
+<script src="/js/jquery.min.js"></script>
+<script src="/js/materialize.min.js"></script>
+
+<script>
+    (function($) {
+        $(document).ready(function(e) {
+
+            // 隐藏禁用javascript（针对微信内置浏览器）的提示
+            $('.noscript').hide();
+
+            // 图片缩放效果
+            var $imgs = $('img').not('.slider-image').not('.avatar-image').not('.carousel-image').not('.card-cover-image').not('.qrcode').not('.wechat-qrcode');
+
+            // 给图片加上点击放大效果（materialbox插件）
+            $imgs.addClass('materialboxed').each(function(i, el) {
+                $(this).attr('data-caption', $(this).attr('alt') || ' ');
+            }).materialbox();
+
+            // 优化表格的显示
+            $('table').each(function() {
+                var $table = $(this);
+                // 除去多行代码的情况
+                if ($table.find('pre').length == 0) {
+                    $table.addClass('responsive-table striped bordered');
+                }
+            });
+
+            // 首页幻灯片
+            $('.slider').slider({indicators: true, full_width: true, interval: 8000});
+
+            $(".button-collapse").sideNav();
+            //$(".category-menu").sideNav();
+
+            // 针对gallery post
+            $('.carousel').carousel({full_width: true});
+            $('.carousel-control.prev').click(function() {
+                $('.carousel').carousel('prev');
+            });
+            $('.carousel-control.next').click(function() {
+                $('.carousel').carousel('next');
+            });
+
+            // 文章目录
+            $('article').not('.simple-article').find('h1').add('h2').add('h3').add('h4').add('h5').add('h6').scrollSpy();
+
+            // 目录随屏幕滚动（防止目录过长越过footer）
+            var $toc = $('.toc');
+            var scrollTargetTop = 0;
+            $(window).scroll(function() {
+                var $activeLink = $toc.find('a.active.section');
+                if ($(window).scrollTop() < 100) {
+                    scrollTargetTop = 0;
+                } else {
+                    if ($activeLink[0]) {
+                        scrollTargetTop = $activeLink.offset().top - $toc.offset().top;
+                    }
+                }
+                $toc.css('top', '-' + scrollTargetTop + 'px');
+            });
+
+            // 修正文章目录的left-border颜色
+            var color = $('.table-of-contents-text').css('color');
+            $('.table-of-contents-link').css('border-left-color', color);
+
+            // 针对移动端做的优化：FAB按钮点击一下收回
+            if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                $('.fixed-action-btn').addClass('click-to-toggle');
+                $(".container.main-container").css("margin-top", "0px");
+            }else {
+                $(".container.main-container").css("margin-top", "30px");
+            }
+
+          window.onload = function () {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让dom加载好之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                // 反之
+                $("#live2dcanvas").show();
+              }
+            }
+
+            // 监听窗口变化
+            $(window).resize(function() {
+              if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                // 让窗口变化之后隐藏live2d
+                $("#live2dcanvas").hide();
+              }else {
+                $("#live2dcanvas").show();
+              }
+            });
+
+            // 回到顶部
+            $('.btn-return-top').click(function() {
+                $('body, html').animate({
+                    scrollTop: 0
+                }, 500);
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },200);
+            });
+
+            $('.btn-floating.waves-effect.button-collapse.orange.darken-1').click(function () {
+                setTimeout(function () {
+                    $(".fixed-action-btn.float-sitemap.click-to-toggle").removeClass("active");
+                },100);
+            });
+
+            // 重置读书页面的Tab标签页的颜色
+            $('li.tab a').hover(function() {
+                $(this).toggleClass('text-lighten-4');
+            });
+            $('.indicator').addClass('pink lighten-2');
+
+            
+            // 添加new标签
+            $('.menu-reading, .menu-about').append('<span class="new badge pink"></span>');
+            
+
+            // 搜索功能
+            $('.modal-trigger').leanModal({
+                // 打开搜索框时自动聚焦
+                ready: function() {
+                    if ($('#search').is(":visible")) {
+                        $('#search-input').focus();
+                        $("#main-menu").css("transform", "translateX(-100%)");
+                    }
+                }
+            });
+            var searchXml = "search.xml";
+            if (searchXml.length == 0) {
+             	searchXml = "search.xml";
+            }
+            var searchPath = "/" + searchXml;
+            initSearch(searchPath, 'search-input', 'search-result');
+
+            // 添加Ctrl+F全局快捷键调出搜索框
+            document.onkeydown = function(e) {
+                    var keyCode = e.keyCode || e.which || e.charCode;
+                    var ctrlKey = e.ctrlKey || e.metaKey;
+                    if(ctrlKey && keyCode == 70) {
+                        $('.menu-search.modal-trigger ').click();
+                        e.preventDefault();
+                        return false;
+                    }
+
+                    if (keyCode) return true;
+            }
+
+            $("#side-user").click(function () {
+                location.href = '/about/';
+            })
+        });
+
+        // 初始化搜索与匹配函数
+        var initSearch = function(path, search_id, content_id) {
+            'use strict';
+            $.ajax({
+                url: path,
+                dataType: "xml",
+                success: function(xmlResponse) {
+                    // get the contents from search data
+                    var datas = $("entry", xmlResponse).map(function() {
+                        return {
+                            title: $("title", this).text(),
+                            content: $("content", this).text(),
+                            url: $("url", this).text()
+                        };
+                    }).get();
+                    var $input = document.getElementById(search_id);
+                    var $resultContent = document.getElementById(content_id);
+                    $input.addEventListener('input', function() {
+                        var str = '<ul class=\"search-result-list\">';
+                        var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                        $resultContent.innerHTML = "";
+                        if (this.value.trim().length <= 0) {
+                            return;
+                        }
+                        // perform local searching
+                        datas.forEach(function(data) {
+                            var isMatch = true;
+                            var content_index = [];
+                            var data_title = data.title.trim().toLowerCase();
+                            var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                            var data_url = data.url;
+                            var index_title = -1;
+                            var index_content = -1;
+                            var first_occur = -1;
+                            // only match artiles with not empty titles and contents
+                            if (data_title != '' && data_content != '') {
+                                keywords.forEach(function(keyword, i) {
+                                    index_title = data_title.indexOf(keyword);
+                                    index_content = data_content.indexOf(keyword);
+                                    if (index_title < 0 && index_content < 0) {
+                                        isMatch = false;
+                                    } else {
+                                        if (index_content < 0) {
+                                            index_content = 0;
+                                        }
+                                        if (i == 0) {
+                                            first_occur = index_content;
+                                        }
+                                    }
+                                });
+                            }
+                            // show search results
+                            if (isMatch) {
+                                keywords.forEach(function(keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    data_title = data_title.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                });
+
+                                str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                                var content = data.content.trim().replace(/<[^>]+>/g, "");
+                                if (first_occur >= 0) {
+                                    // cut out 100 characters
+                                    var start = first_occur - 20;
+                                    var end = first_occur + 80;
+                                    if (start < 0) {
+                                        start = 0;
+                                    }
+                                    if (start == 0) {
+                                        end = 100;
+                                    }
+                                    if (end > content.length) {
+                                        end = content.length;
+                                    }
+                                    var match_content = content.substring(start, end);
+                                    // highlight all keywords
+                                    keywords.forEach(function(keyword) {
+                                        var regS = new RegExp(keyword, "gi");
+                                        match_content = match_content.replace(regS, "<span class=\"search-keyword pink lighten-2\">" + keyword + "</span>");
+                                    });
+
+                                    str += "<p class=\"search-result\">..." + match_content + "...</p>"
+                                }
+                                str += "</li>";
+                            }
+                        });
+                        str += "</ul>";
+                        $resultContent.innerHTML = str;
+                    });
+                }
+            });
+        }
+
+        // 添加百度推送
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        }
+        else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+
+    })(jQuery);
+</script>
+
+
+<script src="/js/prettify.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+        $("pre").addClass("prettyprint");
+        prettyPrint();
+    });
+</script>
+
+
+
+
+
+
+<script>
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "https://hm.baidu.com/hm.js?d6bd33016c98e674bcda9edcd27f708c";
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+
+
+
+
+</body>
+</html>
